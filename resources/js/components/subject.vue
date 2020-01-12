@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
-            <a :href="'/category/'+category.id" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
+            <a href="/category" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3">
                 {{category.name}} subjects
             </div>

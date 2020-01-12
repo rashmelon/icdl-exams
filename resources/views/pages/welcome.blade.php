@@ -96,6 +96,7 @@
                 <div class="links">
                     <a href="/category">Category</a>
                     <a href="/exam">Exams</a>
+                    <a href="/instruction">Instructions</a>
                 </div>
 
                 <reserve></reserve>

@@ -54,3 +54,22 @@ Route::group(['prefix' => 'exam'], function (){
 Route::get('payment/{id}', function ($id){
     return view('pages.candidate_payment', ['candidate' =>\App\Candidate::find($id)]);
 });
+
+Route::get('reservation-pdf/{id}', function ($id){
+    return view('pdf.reservation', [
+        'reservation' =>\App\Reservation::where('id', $id)->first(),
+        'instructions' => \App\Instruction::orderBy('order')->get()
+    ]);
+})->name('reservation-pdf');
+
+Route::get('generate-reservation-pdf/{id}', 'PDF\ReservationController@create');
+
+Route::view('instruction', 'pages.instruction');
+
+
+Route::get('candidate/{id}', function ($id){
+    return view('pages.view_candidate', [
+        'candidate' => \App\Candidate::where('id', $id)->with(['payments', 'skillsCard.category'])->first(),
+        'reservations' => \App\Reservation::where('candidate_id', $id)->with('exam')->get(),
+    ]);
+})->name('reservation-pdf');

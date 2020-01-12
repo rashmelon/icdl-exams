@@ -28,7 +28,10 @@ class ReservationController extends Controller
         }
 
         $id = Reservation::create(request()->all())->id;
-        return $this->respond('Created Successfully', Reservation::where('id', $id)->first());
+        return $this->respond('Created Successfully', Reservation::where('id', $id)->with([
+            'candidate' => function ($query){
+            $query->reservationsCount()->paymentCount()->paidSum();
+        }])->first());
     }
 
     public function update($id)

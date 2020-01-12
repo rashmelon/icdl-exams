@@ -1,6 +1,12 @@
 <template>
     <div class="container-fluid">
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
+
+            <a href="/" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
+            <div class="h3">
+                Categories
+            </div>
+
             <b-button v-b-toggle.addNewExamDate variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Exam</b-button>
 
             <div class="">

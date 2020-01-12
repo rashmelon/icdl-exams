@@ -37,3 +37,6 @@ Route::resource('reservation', 'ReservationController');
 
 Route::post('payment/{id}', 'PaymentController@update');
 Route::resource('payment', 'PaymentController');
+
+Route::post('instruction/{id}', 'InstructionController@update');
+Route::resource('instruction', 'InstructionController');

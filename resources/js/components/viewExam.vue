@@ -82,7 +82,7 @@
                 <td>{{res.candidate.paid_sum}}</td>
                 <td>{{res.candidate.payments_count}}</td>
                 <td v-if="res.not_paid > 0" class="bg-danger">{{res.not_paid}}</td>
-                <td v-else-if="res.not_paid < 0" class="bg-success">{{res.not_paid}}</td>
+                <td v-else-if="res.not_paid < 0" class="bg-success">{{Math.abs(res.not_paid)}}</td>
                 <td v-else>{{res.not_paid}}</td>
                 <td>{{res.notes}}</td>
                 <td><a :href="'/payment/'+res.candidate.id"><button class="btn btn-success">Payments</button></a></td>
@@ -119,11 +119,12 @@
         methods:{
             getData(){
                 axios.get(`/api/reservation?exam=${this.exam.id}`).then((response) => {
-                    this.reservations = response.data.data
+                    this.reservations = response.data.data;
                     for (var i =0; i<this.reservations.length; i++){
-                        this.reservations[i].not_paid = (this.reservations[i].candidate.reservations_count
+                        this.reservations[i].not_paid = this.reservations[i].candidate.reservations_count
+                            + this.reservations[i].candidate.tests
                             - this.reservations[i].subject.category.free_tests
-                            - this.reservations[i].candidate.payments_count);
+                            - this.reservations[i].candidate.payments_count;
                     }
                 }).catch(function(error){
                     console.log(error);
@@ -145,7 +146,6 @@
                 });
             },
             create(){
-                // ضفت الحته دي علشان محدش يحجز في نفس السيشن مادتين
                 var exists = false;
                 this.reservations.forEach((item,index)=>{
                     if (this.candidate.id == item.candidate_id){
@@ -161,19 +161,16 @@
                     data.append('exam_id', this.exam.id);
                     data.append('subject_id', this.subject.id);
 
-
                     axios.post(`/api/reservation`, data).then((response) => {
                         window.alert(response.data.message);
                         if (response.status === 200){
                             this.reservations.push(response.data.data);
+                            window.open(`/reservation-pdf/${response.data.data.id}`);
                         }
-                        // ضفت الحته دي علشان يفضي الخانات لما يخلص
+
                         this.search = '';
                         this.candidates = [];
                         this.subjects = [];
-
-
-
 
                     }).catch(function(error){
                         console.log(error);
@@ -184,8 +181,7 @@
             },
             update(index){
                 let data = new FormData();
-                if (this.candidates[index].skills_card && !this.candidates[index].skills_card.number)
-                    data.append('skills_card_id', this.skillsCards[this.candidates[index].skills_card]['id']);
+
                 axios.post(`/api/candidate/${this.candidates[index].id}`, data).then((response) => {
                     window.alert(response.data.message);
                     this.candidates[index].skills_card = this.skillsCards[this.candidates[index].skills_card];
@@ -195,12 +191,13 @@
                 });
             },
             remove(index){
-                axios.delete(`/api/reservation?exam=${this.exam.id}`).then((response) => {
+                axios.delete(`/api/reservation/${this.reservations[index].id}`).then((response) => {
                     window.alert(response.data.message);
                     if (response.status === 200){
                         this.reservations.splice(index, 1);
                     }
                 }).catch(function(error){
+                    window.alert(error.response.data.message);
                     console.log(error);
                 });
             },

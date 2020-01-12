@@ -26,6 +26,12 @@
                         </div>
                     </div>
 
+                    <div class="col-md-5">
+                        <div class="form-group ">
+                            <a target="_blank" :href="`/candidate/${candidate.id}`"><button class="btn btn-success mt-4 btn-block">Open Record</button></a>
+                        </div>
+                    </div>
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Subject</label>
@@ -112,6 +118,7 @@
                 axios.post(`/api/reservation`, data).then((response) => {
                     window.alert(response.data.message);
                     if (response.status === 200){
+                        window.open(`/reservation-pdf/${response.data.data.id}`);
                         this.search = '';
                         this.candidates = [];
                         this.subjects = [];

@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
-            <a :href="'/category/'+category.id" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
+            <a href="/category" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3">
                 {{category.name}} Candidates
             </div>
@@ -97,12 +97,14 @@
                     <td class="align-middle" width="5%"># Tests</td>
                     <td class="align-middle" width="5%"><i class="fa fa-usd" aria-hidden="true"></i></td>
                     <td class="align-middle">Notes</td>
+                    <td class="align-middle">Cer. State</td>
+                    <td class="align-middle">Finished</td>
                     <td class="align-middle">Update</td>
                     <td class="align-middle">Delete</td>
                 </tr>
             </thead>
             <tbody class="table-hover">
-                <tr v-for="(can, index) in candidates">
+                <tr v-for="(can, index) in candidates" :class="'state-'+can.finished">
                     <td>{{index+1}}</td>
                     <td v-if="can.skills_card && can.skills_card.number">{{can.skills_card.number}}</td>
                     <td v-else-if="can.skills_card || can.skills_card ===0">{{skillsCards[can.skills_card].number}}</td>
@@ -122,6 +124,19 @@
                     <td><input class="form-control" v-model="can.reservations_count+can.tests" type="number"></td>
                     <td><input class="form-control" v-model="can.money" type="number"></td>
                     <td><input class="form-control" v-model="can.notes"></td>
+                    <td>
+                        <select class="form-control" v-model="can.certificate_state">
+                            <template v-for="(state) in states">
+                                <option v-if="state === can.certificate_state" selected :value="state">
+                                    {{state}}
+                                </option>
+                                <option v-else :value="state">
+                                    {{state}}
+                                </option>
+                            </template>
+                        </select>
+                    </td>
+                    <td><input type="checkbox" class="form-control" v-model="can.finished"></td>
 
                     <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
@@ -143,6 +158,7 @@
                 candidate: {'skills_card':[]},
                 candidates: [],
                 skillsCards: [],
+                states:['', 'arrived', 'delivered'],
             }
         },
         mounted(){
@@ -202,6 +218,8 @@
                 data.append('tests', this.candidates[index].tests);
                 data.append('money', this.candidates[index].money);
                 data.append('notes', this.candidates[index].notes);
+                data.append('certificate_state', this.candidates[index].certificate_state);
+                data.append('finished', this.candidates[index].finished?1:0);
                 console.log(index);
                 if ((this.candidates[index].skills_card || this.candidates[index].skills_card === 0) && !this.candidates[index].skills_card.number){
                     data.append('skills_card_id', this.skillsCards[this.candidates[index].skills_card]['id']);
@@ -234,5 +252,8 @@
 <style scoped>
     td{
         text-align: center;
+    }
+    .state-1 , .state-true{
+        background: rgba(202, 197, 66, 0.64);
     }
 </style>

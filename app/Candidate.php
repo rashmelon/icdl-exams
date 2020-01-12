@@ -10,7 +10,7 @@ class Candidate extends Model
 {
     use ReservationElements;
 
-    protected $fillable = ['national_id','english_name','arabic_name','mobile1','mobile2','tests','money','notes','skills_card_id'];
+    protected $fillable = ['national_id','english_name','arabic_name','mobile1','mobile2','tests','money','notes','skills_card_id', 'certificate_state', 'finished'];
 
     protected $with = ['skillsCard'];
 
@@ -43,7 +43,7 @@ class Candidate extends Model
 
     public function scopeCategory($query, $id)
     {
-        $query->whereHas('skills_card', function ($query) use($id){
+        $query->whereHas('skillsCard', function ($query) use($id){
             $query->where('category_id', $id);
         });
     }

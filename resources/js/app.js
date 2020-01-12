@@ -28,6 +28,8 @@ Vue.component('exam', require('./components/exam.vue').default);
 Vue.component('view-exam', require('./components/viewExam.vue').default);
 Vue.component('reserve', require('./components/reserve.vue').default);
 Vue.component('candidate-payment', require('./components/candidatePayment.vue').default);
+Vue.component('instruction', require('./components/instruction.vue').default);
+Vue.component('view-candidate', require('./components/viewCandidate.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

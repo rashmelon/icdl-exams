@@ -3,7 +3,7 @@
 
 
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
-            <a :href="'/category/'" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
+            <a href="/" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3">
                 Categories
             </div>
@@ -38,7 +38,9 @@
                     <td>Unused Skills</td>
                     <td>Free Tests</td>
                     <td>Subjects</td>
-                    <td>View</td>
+                    <td>Skills Card</td>
+                    <td>Subject</td>
+                    <td>Candidate</td>
                     <td>Update</td>
                     <td>Delete</td>
                 </tr>
@@ -52,9 +54,11 @@
                     <td width="5%">{{cat.unused}}</td>
                     <td width="5%">{{cat.free_tests}}</td>
                     <td width="5%">{{cat.subjects.length}}</td>
-                    <td width="3%"><a :href="'/category/'+cat.id"><button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
-                    <td width="3%"><button class="btn btn-warning" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
-                    <td width="3%"><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+                    <td width="5%"><a class="btn btn-success" :href="`/category/${cat.id}/skills-card`"><i class="fa fa-credit-card fa-2x" aria-hidden="true"></i></a></td>
+                    <td width="5%"><a class="btn btn-info" :href="`/category/${cat.id}/subject`"><i class="fa fa-sticky-note-o fa-2x" aria-hidden="true"></i></a></td>
+                    <td width="5%"><a class="btn btn-primary" :href="`/category/${cat.id}/candidate`"><i class="fa fa-user-secret fa-2x" aria-hidden="true"></i></a></td>
+                    <td width="3%"><button class="btn btn-warning" @click="update(index)"><i class="fa fa-pencil-square-o text-white fa-2x" aria-hidden="true"></i></button></td>
+                    <td width="3%"><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button></td>
                 </tr>
             </tbody>
         </table>
