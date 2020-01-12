@@ -2,22 +2,30 @@
 
 namespace App;
 
+use App\Traits\ReservationElements;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Candidate extends Model
 {
+    use ReservationElements;
+
     protected $fillable = ['national_id','english_name','arabic_name','mobile1','mobile2','tests','money','notes','skills_card_id'];
 
     protected $with = ['skillsCard'];
+
+    public function newQuery($excludeDeleted = true) {
+        return parent::newQuery()->reservationsCount()->paymentCount()->paidSum();
+    }
 
     public function skillsCard()
     {
         return $this->belongsTo(SkillsCard::class, 'skills_card_id');
     }
 
-    public function reservations()
+    public function payments()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasMany(Payment::class);
     }
 
     public function scopeSearch($query, $search)
@@ -31,5 +39,26 @@ class Candidate extends Model
             ->orWhereHas('skillsCard', function ($query) use($search){
                 $query->where('number', 'like', "%$search%");
             });
+    }
+
+    public function scopeCategory($query, $id)
+    {
+        $query->whereHas('skills_card', function ($query) use($id){
+            $query->where('category_id', $id);
+        });
+    }
+
+    public function scopePaymentCount($query)
+    {
+        $query->withCount('payments');
+    }
+
+    public function scopePaidSum($query)
+    {
+        $query->withCount([
+            'payments AS paid_sum' => function ($query) {
+                $query->select(DB::raw("SUM(amount) as paid_sum"));
+            }
+        ]);
     }
 }

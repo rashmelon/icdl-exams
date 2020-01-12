@@ -43,7 +43,7 @@ class SkillsCardController extends Controller
     public function applyFilters($builder)
     {
         if (\request()->category_id){
-            $builder->categoryElements();
+            $builder->categoryElements(\request()->category_id);
         }
         if (\request()->unused){
             $builder->unused();

@@ -8,6 +8,8 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}" type="text/css">
+        <script src="{{ asset('js/app.js') }}" async defer></script>
 
         <!-- Styles -->
         <style>
@@ -25,7 +27,7 @@
             }
 
             .flex-center {
-                align-items: center;
+                /*align-items: center;*/
                 display: flex;
                 justify-content: center;
             }
@@ -45,7 +47,7 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 60px;
             }
 
             .links > a {
@@ -61,10 +63,15 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            img{
+                max-height: 150px;
+                margin-top: 100px;
+            }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="flex-center position-ref full-height" id="app">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -80,20 +87,18 @@
             @endif
 
             <div class="content">
+                <img src="{{asset('logo.png')}}">
+
                 <div class="title m-b-md">
-                    Laravel
+                    ICDL Exams
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="/category">Category</a>
+                    <a href="/exam">Exams</a>
                 </div>
+
+                <reserve></reserve>
             </div>
         </div>
     </body>

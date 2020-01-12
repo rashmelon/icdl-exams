@@ -34,3 +34,6 @@ Route::resource('exam', 'ExamController');
 
 Route::post('reservation/{id}', 'ReservationController@update');
 Route::resource('reservation', 'ReservationController');
+
+Route::post('payment/{id}', 'PaymentController@update');
+Route::resource('payment', 'PaymentController');

@@ -53,6 +53,9 @@ class CandidateController extends Controller
         if (request()->search){
             $builder->search(\request()->search);
         }
+        if (request()->category_id){
+            $builder->category(\request()->category_id);
+        }
         return $builder;
     }
 }

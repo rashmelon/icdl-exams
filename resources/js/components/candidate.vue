@@ -105,11 +105,10 @@
                 <tr v-for="(can, index) in candidates">
                     <td>{{index+1}}</td>
                     <td v-if="can.skills_card && can.skills_card.number">{{can.skills_card.number}}</td>
-                    <td v-else-if="can.skills_card">{{skillsCards[can.skills_card].number}}</td>
+                    <td v-else-if="can.skills_card || can.skills_card ===0">{{skillsCards[can.skills_card].number}}</td>
                     <td v-else>
                         <select class="form-control" v-model="can.skills_card">
                             <option v-for="(skill, index1) in skillsCards"
-                                    :selected="index1 === 0"
                                     :value="index1">
                                 {{skill.number}}
                             </option>
@@ -120,19 +119,10 @@
                     <td><input class="form-control" v-model="can.national_id"></td>
                     <td><input class="form-control" v-model="can.mobile1"></td>
                     <td><input class="form-control" v-model="can.mobile2"></td>
-                    <td><input class="form-control" v-model="can.tests" type="number"></td>
+                    <td><input class="form-control" v-model="can.reservations_count+can.tests" type="number"></td>
                     <td><input class="form-control" v-model="can.money" type="number"></td>
                     <td><input class="form-control" v-model="can.notes"></td>
 
-<!--                    <select v-model="skill.used" v-if="!can.skillsCards">-->
-<!--                        <option v-for="el in used"-->
-<!--                                v-if="el !== 'used' ||(el === 'used' && skill.used)"-->
-<!--                                :selected="(skill.used && el === 'used') || (!skill.used && el === 'unused')"-->
-<!--                                :value="el === 'used'? 1:0">-->
-<!--                            {{el}}-->
-<!--                        </option>-->
-<!--                    </select>-->
-<!--                    <td v-else>{{can.skills_card.number}}</td>-->
                     <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
                 </tr>
@@ -166,7 +156,7 @@
         },
         methods:{
             getData(){
-                axios.get(`/api/candidate`).then((response) => {
+                axios.get(`/api/candidate?category_id=${this.category.id}&reservations_count=true`).then((response) => {
                     this.candidates = response.data.data;
                 }).catch(function(error){
                     console.log(error);
@@ -212,11 +202,14 @@
                 data.append('tests', this.candidates[index].tests);
                 data.append('money', this.candidates[index].money);
                 data.append('notes', this.candidates[index].notes);
-                if (this.candidates[index].skills_card && !this.candidates[index].skills_card.number)
+                console.log(index);
+                if ((this.candidates[index].skills_card || this.candidates[index].skills_card === 0) && !this.candidates[index].skills_card.number){
                     data.append('skills_card_id', this.skillsCards[this.candidates[index].skills_card]['id']);
+                    console.log(this.skillsCards[this.candidates[index].skills_card]['id']);
+                }
                 axios.post(`/api/candidate/${this.candidates[index].id}`, data).then((response) => {
                     window.alert(response.data.message);
-                    if (this.candidates[index].skills_card && !this.candidates[index].skills_card.number)
+                    if ((this.candidates[index].skills_card || this.candidates[index].skills_card === 0) && !this.candidates[index].skills_card.number)
                         this.candidates[index].skills_card = this.skillsCards[this.candidates[index].skills_card];
                     console.log(response);
                 }).catch(function(error){

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     protected $fillable = ['notes','candidate_id','exam_id','subject_id'];
-    protected $with = ['candidate', 'exam', 'subject'];
+    protected $with = ['candidate', 'exam', 'subject.category'];
 
     public function candidate()
     {

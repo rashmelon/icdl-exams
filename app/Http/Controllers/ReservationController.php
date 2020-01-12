@@ -23,6 +23,10 @@ class ReservationController extends Controller
 
     public function store()
     {
+        if (Reservation::where('exam_id', \request()->exam_id)->where('candidate_id', \request()->candidate_id)->first()){
+            return $this->respond('Candidate already assigned in this exam', [], 422);
+        }
+
         $id = Reservation::create(request()->all())->id;
         return $this->respond('Created Successfully', Reservation::where('id', $id)->first());
     }

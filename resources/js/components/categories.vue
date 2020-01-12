@@ -7,13 +7,16 @@
             <div class="h3">
                 Categories
             </div>
-            <b-button v-b-toggle.addNewCandidate variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Candidate</b-button>
+            <b-button v-b-toggle.addNewCandidate variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Category</b-button>
         </div>
         <b-collapse id="addNewCandidate" class="mt-2">
             <b-card class="shadow mb-4">
                 <div class="row">
                     <div class="col-md-4">
-                        <input class="form-control" v-model="category" placeholder="name">
+                        <input class="form-control" v-model="category.name" placeholder="name">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" class="form-control" v-model="category.free_tests" placeholder="Free Tests">
                     </div>
                     <div class="col">
                         <button class="btn btn-primary" @click="create">Create</button>
@@ -33,6 +36,7 @@
                     <td>Total Skills</td>
                     <td>Used Skills</td>
                     <td>Unused Skills</td>
+                    <td>Free Tests</td>
                     <td>Subjects</td>
                     <td>View</td>
                     <td>Update</td>
@@ -46,6 +50,7 @@
                     <td width="5%">{{cat.total}}</td>
                     <td width="5%">{{cat.used}}</td>
                     <td width="5%">{{cat.unused}}</td>
+                    <td width="5%">{{cat.free_tests}}</td>
                     <td width="5%">{{cat.subjects.length}}</td>
                     <td width="3%"><a :href="'/category/'+cat.id"><button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
                     <td width="3%"><button class="btn btn-warning" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
@@ -63,7 +68,7 @@
         name: "categories",
         data: function () {
             return {
-                category: [],
+                category: {},
                 categories: [],
             }
         },
@@ -89,7 +94,8 @@
             },
             create(){
                 let data = new FormData();
-                data.append('name', this.category);
+                data.append('name', this.category.name);
+                data.append('free_tests', this.category.free_tests);
                 axios.post(`/api/category`, data).then((response) => {
                     window.alert(response.data.message);
                     if (response.status === 200){

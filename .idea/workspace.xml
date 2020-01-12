@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f935503-762b-4e76-ba20-f54d71911c0f" name="Default Changelist" comment="" />
+    <list default="true" id="6f935503-762b-4e76-ba20-f54d71911c0f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/reserve.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/reserve.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Candidate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Candidate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exam.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exam.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CandidateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CandidateController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SkillsCardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SkillsCardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/candidate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/candidate.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/candidateItem.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/categories.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/categories.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/exam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/exam.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/subject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/subject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/viewExam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/viewExam.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,10 +40,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -112,17 +138,21 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1TmI4jDHLKtjQlYNp8unJ3aQVYF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ICDL manzoma\ICDL Tests\ICDL Tests\public" />
+      <recent name="D:\ICDL manzoma\ICDL Tests\ICDL Tests\resources\js\components" />
+      <recent name="D:\ICDL manzoma\ICDL Tests\ICDL Tests\resources\views\pages" />
       <recent name="D:\ICDL manzoma\ICDL Tests\resources\js\components" />
       <recent name="D:\ICDL manzoma\ICDL Tests\resources\views\pages" />
-      <recent name="D:\ICDL manzoma\ICDL Tests\resources\views" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\ICDL manzoma\ICDL Tests\resources\views\pages" />
@@ -172,10 +202,30 @@
       <workItem from="1577784694555" duration="2066000" />
       <workItem from="1577787217450" duration="9240000" />
       <workItem from="1578123852611" duration="12425000" />
+      <workItem from="1578140467646" duration="7698000" />
+      <workItem from="1578153193974" duration="12000" />
+      <workItem from="1578204578075" duration="2538000" />
+      <workItem from="1578209013288" duration="126000" />
+      <workItem from="1578214828349" duration="9780000" />
+      <workItem from="1578298075848" duration="5679000" />
+      <workItem from="1578472208249" duration="2508000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

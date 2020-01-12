@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('pages.welcome');
 });
 
+Route::get('/reserve', function () {
+    return view('pages.reserve');
+});
+
 
 Route::group(['prefix' => 'category'], function (){
     Route::view('', 'pages.category');
@@ -45,4 +49,8 @@ Route::group(['prefix' => 'exam'], function (){
         return view('pages.view_exam', ['exam' =>\App\Exam::find($id)]);
     });
 
+});
+
+Route::get('payment/{id}', function ($id){
+    return view('pages.candidate_payment', ['candidate' =>\App\Candidate::find($id)]);
 });

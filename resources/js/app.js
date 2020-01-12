@@ -26,7 +26,8 @@ Vue.component('subject', require('./components/subject.vue').default);
 Vue.component('candidate', require('./components/candidate.vue').default);
 Vue.component('exam', require('./components/exam.vue').default);
 Vue.component('view-exam', require('./components/viewExam.vue').default);
-Vue.component('candidate-item', require('./components/candidateItem.vue').default);
+Vue.component('reserve', require('./components/reserve.vue').default);
+Vue.component('candidate-payment', require('./components/candidatePayment.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

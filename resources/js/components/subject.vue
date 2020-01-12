@@ -14,7 +14,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>name</label>
-                            <input class="form-control text-right" v-model="subject.name" placeholder="name">
+                            <input class="form-control" v-model="subject.name" placeholder="name">
                         </div>
                     </div>
 
