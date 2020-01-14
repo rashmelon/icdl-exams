@@ -2368,7 +2368,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.categories.push(data);
 
-          _this2.category = "";
+          _this2.category = {};
         }
       })["catch"](function (error) {
         console.log(error);

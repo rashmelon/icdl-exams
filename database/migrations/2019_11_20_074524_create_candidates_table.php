@@ -15,14 +15,14 @@ class CreateCandidatesTable extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('national_id');
-            $table->string('english_name');
-            $table->string('arabic_name');
-            $table->string('mobile1');
-            $table->string('mobile2');
+            $table->string('national_id')->nullable();
+            $table->string('english_name')->nullable();
+            $table->string('arabic_name')->nullable();
+            $table->string('mobile1')->nullable();
+            $table->string('mobile2')->nullable();
             $table->integer('tests')->default(0);
             $table->integer('money')->default(0);
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->unsignedBigInteger('skills_card_id')->nullable();
             $table->foreign('skills_card_id')->references('id')->on('skills_cards')->onDelete('set null');
             $table->timestamps();

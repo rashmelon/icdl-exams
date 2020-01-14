@@ -109,7 +109,7 @@
                         data['total'] = 0;
                         data['subjects'] = [];
                         this.categories.push(data);
-                        this.category = "";
+                        this.category = {};
                     }
                 }).catch(function(error){
                     console.log(error);

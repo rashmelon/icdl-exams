@@ -40,3 +40,5 @@ Route::resource('payment', 'PaymentController');
 
 Route::post('instruction/{id}', 'InstructionController@update');
 Route::resource('instruction', 'InstructionController');
+
+Route::post('excel', 'ExcelController@create');

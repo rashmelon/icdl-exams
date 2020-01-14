@@ -73,3 +73,5 @@ Route::get('candidate/{id}', function ($id){
         'reservations' => \App\Reservation::where('candidate_id', $id)->with('exam')->get(),
     ]);
 })->name('reservation-pdf');
+
+Route::view('excel', 'pages.submit_excel');
