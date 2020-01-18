@@ -1,7 +1,7 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid w-auto">
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
-            <a href="/category" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
+            <a href="/" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3" v-if="candidate.skills_card">
                 {{candidate.skills_card.category.name}}
             </div>
@@ -11,7 +11,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>arabic name</label>
-                        <input class="form-control text-right" v-model="candidate['arabic_name']" placeholder="arabic name">
+                        <input class="form-control text-right" v-model="candidate['arabic_name']" placeholder="arabic name" dir="rtl">
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
                             </option>
                         </select>
 
-                        <select type="" class="form-control" v-model="skill" @change="getSkills">
+                        <select type="" class="form-control" v-model="candidate['skills_card']" @change="getSkills">
                             <option v-for="sk in skillsCards" :value="sk">
                                 {{ sk.number }}
                             </option>
@@ -84,13 +84,10 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label>Choose Skill</label>
+                    <label>Certificate</label>
                     <select class="form-control" v-model="candidate.certificate_state">
                         <template v-for="(state) in states">
-                            <option v-if="state === candidate.certificate_state" selected :value="state">
-                                {{state}}
-                            </option>
-                            <option v-else :value="state">
+                            <option :value="state">
                                 {{state}}
                             </option>
                         </template>
@@ -108,52 +105,12 @@
 
         <div class="row">
             <div class="col-md-6">
-                <b-card>
-                    Reservations
-                    <table class="table table-bordered table-hover table-responsive ">
-                        <thead class="thead-dark bg-dark text-white">
-                        <tr>
-                            <td class="align-middle" width="2%">index</td>
-                            <td class="align-middle" width="5%">subject</td>
-                            <td class="align-middle" width="5%">Date</td>
-                            <td class="align-middle" width="10%">Notes</td>
-                            <td class="align-middle" width="1%">Delete</td>
-                        </tr>
-                        </thead>
-                        <tbody class="table-hover">
-                        <tr v-for="(res, index) in reservations">
-                            <td>{{index+1}}</td>
-                            <td>{{res.subject.name}}</td>
-                            <td>{{res.exam.date +'@'+ res.exam.time}}</td>
-                            <td>{{res.notes}}</td>
-                            <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </b-card>
+                <candidate-reservation :candidate="candidate"></candidate-reservation>
             </div>
             <div class="col-md-6">
-                <b-card>
-                    Payments
-                    <table class="table table-bordered table-hover table-responsive ">
-                        <thead class="thead-dark bg-dark text-white">
-                        <tr>
-                            <td class="align-middle" width="2%">index</td>
-                            <td class="align-middle" width="10%">Payment</td>
-                            <td class="align-middle" width="1%">Update</td>
-                            <td class="align-middle" width="1%">Delete</td>
-                        </tr>
-                        </thead>
-                        <tbody class="table-hover">
-                        <tr v-for="(pay, index) in candidate.payments">
-                            <td>{{index+1}}</td>
-                            <td><input type="number" v-model="pay.amount" class="form-control"></td>
-                            <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
-                            <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </b-card>
+                <candidate-payment :candidate="candidate">
+
+                </candidate-payment>
             </div>
         </div>
     </div>
@@ -165,19 +122,17 @@
         data: function () {
             return {
                 skillsCards: [],
-                skill: [],
                 categories: [],
                 category: {},
                 states:['', 'arrived', 'delivered'],
+                payments: [],
+                payment: {},
             }
         },
         props:{
             candidate: {
                 required: true
             },
-            reservations: {
-                required: true
-            }
         },
         mounted(){
             this.getCategories();
@@ -211,11 +166,7 @@
                 data.append('notes', this.candidate.notes);
                 data.append('certificate_state', this.candidate.certificate_state);
                 data.append('finished', this.candidate.finished?1:0);
-                console.log(index);
-                if (this.skill){
-                    console.log(this.skill);
-                    data.append('skills_card_id', this.skill['id']);
-                }
+                data.append('skills_card_id', this.candidate.skills_card['id']);
                 axios.post(`/api/candidate/${this.candidate.id}`, data).then((response) => {
                     window.alert(response.data.message);
                     if (this.skill)
@@ -225,17 +176,6 @@
                     console.log(error.response);
                 });
             },
-            remove(index){
-                axios.delete(`/api/candidate/${this.candidates[index].id}`).then((response) => {
-                    window.alert(response.data.message);
-                    if (response.status === 200){
-                        this.candidates.splice(index, 1);
-                    }
-                }).catch(function(error){
-                    console.log(error);
-                });
-            },
-
         }
     }
 </script>

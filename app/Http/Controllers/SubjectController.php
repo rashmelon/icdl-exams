@@ -10,7 +10,7 @@ class SubjectController extends Controller
 {
     public function index()
     {
-        return $this->respond('All Subjects Fetched Successfully', $this->applyFilters(Subject::orderBy('name', 'desc'))->get());
+        return $this->respond('All Subjects Fetched Successfully', $this->applyFilters(Subject::orderBy('name', 'asc')->with('category'))->get());
     }
 
     public function store()

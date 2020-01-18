@@ -1,4 +1,13 @@
+body{
+    background: #eee!important;
+}
+
 #main-container{
+    margin: 0 auto;
+    font-family: Arial;
+}
+
+#main-container-pdf{
     width: 850px;
     margin: 0 auto;
     font-family: Arial;
@@ -31,4 +40,28 @@ ol{
     font-size: 24px;
     text-align: right;
     font-weight: bold;
+}
+
+.jumbotron{
+    background: #fff;
+    border: 1px solid #bbb;
+    color: #333!important;
+}
+.card-body{
+    border: 1px solid #bbb!important;
+}
+
+.table{
+    border: 0;
+}
+.table thead{
+    background: #28a745;
+    color: white;
+    font-size: 18px;
+}
+.table tbody{
+    background: white;
+}
+.table tbody input[type=checkbox]{
+    height: 25px;
 }

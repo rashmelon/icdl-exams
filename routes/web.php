@@ -69,8 +69,7 @@ Route::view('instruction', 'pages.instruction');
 
 Route::get('candidate/{id}', function ($id){
     return view('pages.view_candidate', [
-        'candidate' => \App\Candidate::where('id', $id)->with(['payments', 'skillsCard.category'])->first(),
-        'reservations' => \App\Reservation::where('candidate_id', $id)->with('exam')->get(),
+        'candidate' => \App\Candidate::where('id', $id)->with(['skillsCard.category'])->first(),
     ]);
 })->name('reservation-pdf');
 

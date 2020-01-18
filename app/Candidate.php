@@ -10,7 +10,7 @@ class Candidate extends Model
 {
     use ReservationElements;
 
-    protected $fillable = ['national_id','english_name','arabic_name','mobile1','mobile2','tests','money','notes','skills_card_id', 'certificate_state', 'finished'];
+    protected $fillable = ['national_id','english_name','arabic_name','mobile1','mobile2','tests','money','notes','skills_card_id', 'certificate_state', 'finished', 'absence'];
 
     protected $with = ['skillsCard'];
 

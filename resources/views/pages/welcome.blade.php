@@ -14,7 +14,7 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
+                background-color: #eee;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
@@ -66,7 +66,7 @@
 
             img{
                 max-height: 150px;
-                margin-top: 100px;
+                margin-top: 20px;
             }
         </style>
     </head>

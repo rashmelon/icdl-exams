@@ -10,7 +10,7 @@ class CandidateController extends Controller
 {
     public function index()
     {
-        return $this->respond('All Records Fetched Successfully', $this->applyFilters(Candidate::with('skillsCard'))->get());
+        return $this->respond('All Records Fetched Successfully', $this->applyFilters(Candidate::with(['skillsCard.category']))->get());
     }
 
     public function store()

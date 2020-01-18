@@ -1,13 +1,15 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid w-auto">
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
 
             <a href="/" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3">
-                Categories
+                Exams
             </div>
 
-            <b-button v-b-toggle.addNewExamDate variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Exam</b-button>
+            <b-button class="btn btn-success" @click="getData('coming')"><i class="fa fa-check mr-2" aria-hidden="true"></i>Coming</b-button>
+
+            <b-button @click="getData('past')"><i class="fa fa-clock-o mr-2" aria-hidden="true"></i>Passed</b-button>
 
             <div class="">
                 <div class="input-group mb-3">
@@ -81,11 +83,11 @@
         },
         mounted(){
             console.log(new Date());
-            this.getData();
+            this.getData('coming');
         },
         methods:{
-            getData(){
-                axios.get(`/api/exam`).then((response) => {
+            getData(filter){
+                axios.get(`/api/exam?${filter}=true`).then((response) => {
                     this.exams = response.data.data;
                     this.full_exams = response.data.data;
                 }).catch(function(error){

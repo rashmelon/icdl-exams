@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid w-auto">
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
             <a href="/category" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3">
@@ -13,7 +13,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>arabic name</label>
-                            <input class="form-control text-right" v-model="candidate['arabic_name']" placeholder="arabic name">
+                            <input class="form-control text-right" v-model="candidate['arabic_name']" placeholder="arabic name" dir="rtl">
                         </div>
                     </div>
 
@@ -84,19 +84,19 @@
 
         <hr>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hoverable">
             <thead class="thead-dark">
                 <tr>
-                    <td class="align-middle">index</td>
+                    <td class="align-middle">#</td>
                     <td class="align-middle" width="10%">Skill Card</td>
                     <td class="align-middle">Arabic Name</td>
                     <td class="align-middle">English Name</td>
-                    <td class="align-middle">National ID</td>
-                    <td class="align-middle" width="5%">First Mobile</td>
-                    <td class="align-middle" width="5%">Second Mobile</td>
-                    <td class="align-middle" width="5%"># Tests</td>
-                    <td class="align-middle" width="5%"><i class="fa fa-usd" aria-hidden="true"></i></td>
-                    <td class="align-middle">Notes</td>
+                    <td class="align-middle" style="width: 150px">National ID</td>
+                    <td class="align-middle" width="10%">First Mobile</td>
+                    <!--<td class="align-middle" width="5%">Second Mobile</td>-->
+                    <td class="align-middle" width="5%">#Tests</td>
+                    <td class="align-middle" width="5%">Absence</td>
+                    <!--<td class="align-middle">Notes</td>-->
                     <td class="align-middle">Cer. State</td>
                     <td class="align-middle">Finished</td>
                     <td class="align-middle">Update</td>
@@ -118,19 +118,16 @@
                     </td>
                     <td><input class="form-control text-right" v-model="can.arabic_name"></td>
                     <td><input class="form-control" v-model="can.english_name"></td>
-                    <td><input class="form-control" v-model="can.national_id"></td>
+                    <td><input class="form-control" v-model="can.national_id" style="width: 150px"></td>
                     <td><input class="form-control" v-model="can.mobile1"></td>
-                    <td><input class="form-control" v-model="can.mobile2"></td>
+                    <!--<td><input class="form-control" v-model="can.mobile2"></td>-->
                     <td><input class="form-control" v-model="can.reservations_count+can.tests" type="number"></td>
-                    <td><input class="form-control" v-model="can.money" type="number"></td>
-                    <td><input class="form-control" v-model="can.notes"></td>
+                    <td><input class="form-control" v-model="can.absence" type="number"></td>
+                    <!--<td><input class="form-control" v-model="can.notes"></td>-->
                     <td>
                         <select class="form-control" v-model="can.certificate_state">
                             <template v-for="(state) in states">
-                                <option v-if="state === can.certificate_state" selected :value="state">
-                                    {{state}}
-                                </option>
-                                <option v-else :value="state">
+                                <option :value="state">
                                     {{state}}
                                 </option>
                             </template>
@@ -155,7 +152,7 @@
         name: "candidate",
         data: function () {
             return {
-                candidate: {'skills_card':[]},
+                candidate: {'skills_card':[], 'mobile2':''},
                 candidates: [],
                 skillsCards: [],
                 states:['', 'arrived', 'delivered'],
@@ -193,10 +190,11 @@
                 data.append('national_id', this.candidate['national_id']);
                 data.append('mobile1', this.candidate['mobile1']);
                 data.append('mobile2', this.candidate['mobile2']);
-                data.append('tests', this.candidate['tests']);
-                data.append('money', this.candidate['money']);
+                data.append('tests', this.candidate['tests']? this.candidate['tests']:0);
+                data.append('money', this.candidate['money']? this.candidate['money']:0);
                 data.append('notes', this.candidate['notes']);
-                data.append('skills_card_id', this.candidate['skills_card']['id']);
+                if (this.candidate['skills_card']['id'])
+                    data.append('skills_card_id', this.candidate['skills_card']['id']);
 
                 axios.post(`/api/candidate`, data).then((response) => {
                     window.alert(response.data.message);

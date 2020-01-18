@@ -26,8 +26,10 @@ class SkillsCardController extends Controller
 
         if (\request()->used == 0){
             $candidate = Candidate::where('skills_card_id', $id)->first();
-            $candidate->skills_card_id = null;
-            $candidate->save();
+            if ($candidate){
+                $candidate->skills_card_id = null;
+                $candidate->save();
+            }
         }
 
         return $this->respond('Updated Successfully');

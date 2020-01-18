@@ -1,10 +1,10 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid w-auto">
 
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
             <a :href="'/exam'" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3">
-                {{exam.date}} @ {{exam.time}}
+                {{exam.date}} at {{ new Date(Date.parse(exam.date+' '+exam.time)).getHours() <= 12? new Date(Date.parse(exam.date+' '+exam.time)).getHours() : new Date(Date.parse(exam.date+' '+exam.time)).getHours() - 12}}
             </div>
             <b-button v-b-toggle.addNewExam variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Reservation</b-button>
         </div>
@@ -54,38 +54,39 @@
             <thead class="thead-dark bg-dark text-white">
             <tr>
                 <td class="align-middle" width="2%">index</td>
-                <td class="align-middle" width="5%">subject</td>
+                <td class="align-middle" width="10%">subject</td>
                 <td class="align-middle" width="10%">Skill Card</td>
                 <td class="align-middle">English Name</td>
-                <td class="align-middle" width="10%">National ID</td>
                 <td class="align-middle" width="8%">First Mobile</td>
-                <td class="align-middle" width="8%">Second Mobile</td>
                 <td class="align-middle" width="5%"># Tests</td>
+                <td class="align-middle" width="5%">Abs</td>
                 <td class="align-middle" width="5%">Total Paid</td>
-                <td class="align-middle" width="5%"># Payments</td>
+                <td class="align-middle" width="5%"># Pay</td>
                 <td class="align-middle" width="5%">Not Paid</td>
-                <td class="align-middle" width="10%">Notes</td>
-                <td class="align-middle" width="5%">View Payments</td>
+                <td class="align-middle" width="5%">Notes</td>
+                <td class="align-middle" width="5%">View Paper</td>
+                <td class="align-middle" width="5%">View Can</td>
                 <td class="align-middle" width="1%">Delete</td>
             </tr>
             </thead>
             <tbody class="table-hover">
             <tr v-for="(res, index) in reservations">
-                <td>{{index+1}}</td>
+                <td>{{parseInt(index) + 1}}</td>
                 <td>{{res.subject.name}}</td>
-                <td>{{res.candidate.skills_card.number}}</td>
+                <td v-if="res.candidate.skills_card">{{res.candidate.skills_card.number}}</td>
+                <td v-else></td>
                 <td>{{res.candidate.english_name}}</td>
-                <td>{{res.candidate.national_id}}</td>
                 <td>{{res.candidate.mobile1}}</td>
-                <td>{{res.candidate.mobile2}}</td>
                 <td>{{res.candidate.tests+res.candidate.reservations_count}}</td>
+                <td>{{res.candidate.absence}}</td>
                 <td>{{res.candidate.paid_sum}}</td>
                 <td>{{res.candidate.payments_count}}</td>
                 <td v-if="res.not_paid > 0" class="bg-danger">{{res.not_paid}}</td>
                 <td v-else-if="res.not_paid < 0" class="bg-success">{{Math.abs(res.not_paid)}}</td>
                 <td v-else>{{res.not_paid}}</td>
                 <td>{{res.notes}}</td>
-                <td><a :href="'/payment/'+res.candidate.id"><button class="btn btn-success">Payments</button></a></td>
+                <td><a :href="`/reservation-pdf/${res.id}`" target="_blank"><button class="btn btn-success">View</button></a></td>
+                <td><a :href="`/candidate/${res.candidate.id}`" target="_blank"><button class="btn btn-success">Can</button></a></td>
                 <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
             </tr>
             </tbody>
@@ -120,11 +121,15 @@
             getData(){
                 axios.get(`/api/reservation?exam=${this.exam.id}`).then((response) => {
                     this.reservations = response.data.data;
+                    console.log(typeof this.reservations);
+                    console.log(this.reservations.length);
+                    console.log(response.data.data);
                     for (var i =0; i<this.reservations.length; i++){
                         this.reservations[i].not_paid = this.reservations[i].candidate.reservations_count
                             + this.reservations[i].candidate.tests
                             - this.reservations[i].subject.category.free_tests
                             - this.reservations[i].candidate.payments_count;
+                        console.log(this.reservations[i].not_paid);
                     }
                 }).catch(function(error){
                     console.log(error);
@@ -146,37 +151,26 @@
                 });
             },
             create(){
-                var exists = false;
-                this.reservations.forEach((item,index)=>{
-                    if (this.candidate.id == item.candidate_id){
-                        exists = true;
+                let data = new FormData();
+                data.append('candidate_id', this.candidate.id);
+                data.append('exam_id', this.exam.id);
+                data.append('subject_id', this.subject.id);
+
+                axios.post(`/api/reservation`, data).then((response) => {
+                    if (response.status === 200){
+                        this.reservations.push(response.data.data);
+                        window.open(`/reservation-pdf/${response.data.data.id}`);
                     }
+
+                    this.search = '';
+                    this.candidates = [];
+                    this.subjects = [];
+                    this.subject = {};
+
+                }).catch(function(error){
+                    window.alert(error.response.data.message);
+                    console.log(error);
                 });
-                if (exists){
-                    alert('Candidate Already Exists')
-                }
-                else {
-                    let data = new FormData();
-                    data.append('candidate_id', this.candidate.id);
-                    data.append('exam_id', this.exam.id);
-                    data.append('subject_id', this.subject.id);
-
-                    axios.post(`/api/reservation`, data).then((response) => {
-                        window.alert(response.data.message);
-                        if (response.status === 200){
-                            this.reservations.push(response.data.data);
-                            window.open(`/reservation-pdf/${response.data.data.id}`);
-                        }
-
-                        this.search = '';
-                        this.candidates = [];
-                        this.subjects = [];
-
-                    }).catch(function(error){
-                        console.log(error);
-                    });
-                }
-
 
             },
             update(index){

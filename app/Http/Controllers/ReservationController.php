@@ -11,13 +11,13 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        return $this->respond('All Exams Fetched Successfully', $this->applyFilters(Reservation::query())->get()->sortBy('exam.date')->sortBy('exam.time'));
+        return $this->respond('All Exams Fetched Successfully', $this->applyFilters(Reservation::query())->get());
     }
 
     public function create()
     {
         return $this->respond('Fetched Successfully', [
-            'exams' => Exam::coming()->get(),
+            'exams' => Exam::coming()->orderBy('date', 'asc')->orderBy('time', 'asc')->get(),
         ]);
     }
 
@@ -27,11 +27,24 @@ class ReservationController extends Controller
             return $this->respond('Candidate already assigned in this exam', [], 422);
         }
 
-        $id = Reservation::create(request()->all())->id;
-        return $this->respond('Created Successfully', Reservation::where('id', $id)->with([
-            'candidate' => function ($query){
-            $query->reservationsCount()->paymentCount()->paidSum();
-        }])->first());
+        if (Reservation::where('subject_id', \request()->subject_id)
+            ->where('candidate_id', \request()->candidate_id)
+            ->whereHas('exam', function($query){
+                $query->where('date', '>', today());
+            })->first()){
+            return $this->respond('Candidate already assigned to this subject', [], 422);
+        }
+
+        if (Reservation::where('exam_id', \request()->exam_id)->count() < 20){
+            $id = Reservation::create(request()->all())->id;
+            return $this->respond('Created Successfully', Reservation::where('id', $id)->with([
+                'candidate' => function ($query){
+                    $query->reservationsCount()->paymentCount()->paidSum();
+                }])->first());
+        }
+        else{
+            return $this->respond('Exam is full', [], 422);
+        }
     }
 
     public function update($id)

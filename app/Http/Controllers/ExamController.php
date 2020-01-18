@@ -36,6 +36,9 @@ class ExamController extends Controller
         if (\request()->coming){
             $builder->coming();
         }
+        if (\request()->past){
+            $builder->past();
+        }
         return $builder;
     }
 }

@@ -17,6 +17,11 @@ class Exam extends Model
 
     public function scopeComing($query)
     {
-        return $query->where('date', '>', now());
+        return $query->where('date', '>=', today());
+    }
+
+    public function scopePast($query)
+    {
+        return $query->where('date', '<', today());
     }
 }

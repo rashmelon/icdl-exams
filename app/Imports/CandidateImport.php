@@ -25,7 +25,7 @@ class CandidateImport implements ToModel
             $skill = new SkillsCard([
                 'number' => $row[1],
                 'used' => 1,
-                'category_id' => 1
+                'category_id' => 3
             ]);
         }
 

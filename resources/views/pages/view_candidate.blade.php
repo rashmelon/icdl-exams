@@ -1,5 +1,5 @@
 @extends('Layouts.app')
 
 @section('content')
-    <view-candidate :candidate="{{$candidate}}" :reservations="{{$reservations}}"></view-candidate>
+    <view-candidate :candidate="{{$candidate}}"></view-candidate>
 @endsection

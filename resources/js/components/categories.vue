@@ -1,5 +1,5 @@
  <template>
-    <div class="container-fluid">
+    <div class="container-fluid w-auto">
 
 
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
@@ -31,14 +31,14 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <td>index</td>
+                    <!--<td>index</td>-->
                     <td>name</td>
                     <td>Total Skills</td>
                     <td>Used Skills</td>
                     <td>Unused Skills</td>
                     <td>Free Tests</td>
                     <td>Subjects</td>
-                    <td>Skills Card</td>
+                    <td>SkillsCard</td>
                     <td>Subject</td>
                     <td>Candidate</td>
                     <td>Update</td>
@@ -47,16 +47,16 @@
             </thead>
             <tbody>
                 <tr v-for="(cat, index) in categories">
-                    <td width="3%">{{index+1}}</td>
+                    <!--<td width="3%">{{index+1}}</td>-->
                     <td><input class="form-control" v-model="cat.name"></td>
-                    <td width="5%">{{cat.total}}</td>
-                    <td width="5%">{{cat.used}}</td>
-                    <td width="5%">{{cat.unused}}</td>
-                    <td width="5%">{{cat.free_tests}}</td>
-                    <td width="5%">{{cat.subjects.length}}</td>
-                    <td width="5%"><a class="btn btn-success" :href="`/category/${cat.id}/skills-card`"><i class="fa fa-credit-card fa-2x" aria-hidden="true"></i></a></td>
-                    <td width="5%"><a class="btn btn-info" :href="`/category/${cat.id}/subject`"><i class="fa fa-sticky-note-o fa-2x" aria-hidden="true"></i></a></td>
-                    <td width="5%"><a class="btn btn-primary" :href="`/category/${cat.id}/candidate`"><i class="fa fa-user-secret fa-2x" aria-hidden="true"></i></a></td>
+                    <td width="8%">{{cat.total}}</td>
+                    <td width="8%">{{cat.used}}</td>
+                    <td width="8%">{{cat.unused}}</td>
+                    <td width="8%">{{cat.free_tests}}</td>
+                    <td width="8%">{{cat.subjects.length}}</td>
+                    <td width="3%"><a class="btn btn-success" :href="`/category/${cat.id}/skills-card`"><i class="fa fa-credit-card fa-2x" aria-hidden="true"></i></a></td>
+                    <td width="3%"><a class="btn btn-info" :href="`/category/${cat.id}/subject`"><i class="fa fa-sticky-note-o fa-2x" aria-hidden="true"></i></a></td>
+                    <td width="3%"><a class="btn btn-primary" :href="`/category/${cat.id}/candidate`"><i class="fa fa-user-secret fa-2x" aria-hidden="true"></i></a></td>
                     <td width="3%"><button class="btn btn-warning" @click="update(index)"><i class="fa fa-pencil-square-o text-white fa-2x" aria-hidden="true"></i></button></td>
                     <td width="3%"><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button></td>
                 </tr>

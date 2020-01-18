@@ -1,7 +1,7 @@
 @extends('Layouts.app')
 
 @section('content')
-    <div dir="rtl" id="main-container">
+    <div dir="rtl" id="main-container-pdf">
         <div id="exam-data">
             <div>
                 <img src="{{asset('logo.png')}}" id="reservation-logo">
@@ -30,11 +30,13 @@
                     <td>:</td>
                     <td>{{$reservation->candidate->english_name}}</td>
                 </tr>
+                @if($reservation->candidate->skillsCard)
                 <tr>
                     <td>رقم بطاقة المهارة</td>
                     <td>:</td>
                     <td>{{$reservation->candidate->skillsCard->number}}</td>
                 </tr>
+                @endif
             </table>
 
         </div>

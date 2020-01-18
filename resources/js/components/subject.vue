@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid w-auto">
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
             <a href="/category" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3">
@@ -63,8 +63,8 @@
                         </option>
                     </select>
                 </td>
-                <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o mr-2" aria-hidden="true"></i>Update</button></td>
-                <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o mr-2" aria-hidden="true"></i>Delete</button></td>
+                <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o text-white fa-2x" aria-hidden="true"></i></button></td>
+                <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button></td>
             </tr>
             </tbody>
         </table>

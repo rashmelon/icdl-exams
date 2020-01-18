@@ -20,8 +20,8 @@ class CreateCandidatesTable extends Migration
             $table->string('arabic_name')->nullable();
             $table->string('mobile1')->nullable();
             $table->string('mobile2')->nullable();
-            $table->integer('tests')->default(0);
-            $table->integer('money')->default(0);
+            $table->integer('tests')->default(0)->nullable();
+            $table->integer('money')->default(0)->nullable();
             $table->string('notes')->nullable();
             $table->unsignedBigInteger('skills_card_id')->nullable();
             $table->foreign('skills_card_id')->references('id')->on('skills_cards')->onDelete('set null');
