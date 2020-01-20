@@ -1,6 +1,8 @@
 <template>
 
+
     <b-card>
+
         <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
             <b-button v-b-toggle.addNewReservation variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Reservation</b-button>
         </div>
@@ -137,15 +139,17 @@
                 }
             },
             remove(index){
-                axios.delete(`/api/reservation/${this.reservations[index].id}`).then((response) => {
-                    window.alert(response.data.message);
-                    if (response.status === 200){
-                        this.reservations.splice(index, 1);
-                    }
-                }).catch(function(error){
-                    window.alert(error.response.data.message);
-                    console.log(error);
-                });
+                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')) {
+                    axios.delete(`/api/reservation/${this.reservations[index].id}`).then((response) => {
+                        window.alert(response.data.message);
+                        if (response.status === 200) {
+                            this.reservations.splice(index, 1);
+                        }
+                    }).catch(function (error) {
+                        window.alert(error.response.data.message);
+                        console.log(error);
+                    });
+                }
             },
         },
     }

@@ -4,7 +4,7 @@
 
             <a href="/" class="btn btn-outline-dark"><i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>back</a>
             <div class="h3">
-                Categories
+                Instuctions
             </div>
 
             <b-button v-b-toggle.addNewExamDate variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Instruction</b-button>
@@ -32,7 +32,7 @@
 
         <hr>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered ">
             <thead class="thead-dark">
             <tr>
                 <td class="align-middle" width="5%">Index</td>
@@ -44,8 +44,8 @@
             </thead>
             <tbody class="table-hover">
             <tr v-for="(inst, index) in instructions">
-                <td>{{index+1}}</td>
-                <td><input type="number" class="form-control text-right" v-model="inst.order"></td>
+                <td class="text-center">{{index+1}}</td>
+                <td><input type="number" class="form-control text-center" v-model="inst.order"></td>
                 <td><input type="text" class="form-control text-right" v-model="inst.name" dir="rtl"></td>
                 <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                 <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
@@ -104,19 +104,20 @@
                 });
             },
             remove(index){
-                axios.delete(`/api/instruction/${this.instructions[index].id}`).then((response) => {
-                    window.alert(response.data.message);
-                    if (response.status === 200){
-                        this.instructions.splice(index, 1);
-                    }
-                }).catch(function(error){
-                    console.log(error);
-                });
+                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')) {
+                    axios.delete(`/api/instruction/${this.instructions[index].id}`).then((response) => {
+                        window.alert(response.data.message);
+                        if (response.status === 200) {
+                            this.instructions.splice(index, 1);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
             },
         }
     }
 </script>
 
 <style scoped>
-
 </style>

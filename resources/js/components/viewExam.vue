@@ -50,11 +50,12 @@
             </b-card>
         </b-collapse>
 
-        <table class="table table-bordered table-hover table-responsive ">
+        <table class="table table-bordered table-hover table-responsive exam">
             <thead class="thead-dark bg-dark text-white">
             <tr>
+                <td class="align-middle" width="2%">Revised</td>
                 <td class="align-middle" width="2%">index</td>
-                <td class="align-middle" width="10%">subject</td>
+                <td class="align-middle" width="5%">subject</td>
                 <td class="align-middle" width="10%">Skill Card</td>
                 <td class="align-middle">English Name</td>
                 <td class="align-middle" width="8%">First Mobile</td>
@@ -63,14 +64,15 @@
                 <td class="align-middle" width="5%">Total Paid</td>
                 <td class="align-middle" width="5%"># Pay</td>
                 <td class="align-middle" width="5%">Not Paid</td>
-                <td class="align-middle" width="5%">Notes</td>
-                <td class="align-middle" width="5%">View Paper</td>
-                <td class="align-middle" width="5%">View Can</td>
+<!--                <td class="align-middle" width="5%">Notes</td>-->
+                <td class="align-middle" width="5%">Paper</td>
+                <td class="align-middle" width="5%">candi.</td>
                 <td class="align-middle" width="1%">Delete</td>
             </tr>
             </thead>
             <tbody class="table-hover">
             <tr v-for="(res, index) in reservations">
+                <td class="position-relative"><input type="checkbox" class="form-control review"><div class="d-none overlay"></div></td>
                 <td>{{parseInt(index) + 1}}</td>
                 <td>{{res.subject.name}}</td>
                 <td v-if="res.candidate.skills_card">{{res.candidate.skills_card.number}}</td>
@@ -81,12 +83,13 @@
                 <td>{{res.candidate.absence}}</td>
                 <td>{{res.candidate.paid_sum}}</td>
                 <td>{{res.candidate.payments_count}}</td>
-                <td v-if="res.not_paid > 0" class="bg-danger">{{res.not_paid}}</td>
-                <td v-else-if="res.not_paid < 0" class="bg-success">{{Math.abs(res.not_paid)}}</td>
-                <td v-else>{{res.not_paid}}</td>
-                <td>{{res.notes}}</td>
-                <td><a :href="`/reservation-pdf/${res.id}`" target="_blank"><button class="btn btn-success">View</button></a></td>
-                <td><a :href="`/candidate/${res.candidate.id}`" target="_blank"><button class="btn btn-success">Can</button></a></td>
+                <td :class="{'bg-danger': res.not_paid > 0, 'bg-success': res.not_paid < 0}">{{Math.abs(res.not_paid)}}</td>
+<!--                <td v-if="res.not_paid > 0" class="bg-danger">{{res.not_paid}}</td>-->
+<!--                <td v-else-if="res.not_paid < 0" class="bg-success">{{Math.abs(res.not_paid)}}</td>-->
+<!--                <td v-else>{{res.not_paid}}</td>-->
+<!--                <td>{{res.notes}}</td>-->
+                <td><a :href="`/reservation-pdf/${res.id}`" target="_blank"><button class="btn btn-dark"><i class="fa fa-print" aria-hidden="true"></i></button></a></td>
+                <td><a :href="`/candidate/${res.candidate.id}`" target="_blank"><button class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
                 <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
             </tr>
             </tbody>
@@ -127,8 +130,10 @@
                     for (var i =0; i<this.reservations.length; i++){
                         this.reservations[i].not_paid = this.reservations[i].candidate.reservations_count
                             + this.reservations[i].candidate.tests
+                            + this.reservations[i].candidate.absence
                             - this.reservations[i].subject.category.free_tests
                             - this.reservations[i].candidate.payments_count;
+                        this.reservations[i].clicked = false;
                         console.log(this.reservations[i].not_paid);
                     }
                 }).catch(function(error){
@@ -185,15 +190,17 @@
                 });
             },
             remove(index){
-                axios.delete(`/api/reservation/${this.reservations[index].id}`).then((response) => {
-                    window.alert(response.data.message);
-                    if (response.status === 200){
-                        this.reservations.splice(index, 1);
-                    }
-                }).catch(function(error){
-                    window.alert(error.response.data.message);
-                    console.log(error);
-                });
+                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')){
+                    axios.delete(`/api/reservation/${this.reservations[index].id}`).then((response) => {
+                        window.alert(response.data.message);
+                        if (response.status === 200){
+                            this.reservations.splice(index, 1);
+                        }
+                    }).catch(function(error){
+                        window.alert(error.response.data.message);
+                        console.log(error);
+                    });
+                }
             },
         }
     }
@@ -202,5 +209,11 @@
 <style scoped>
     td{
         text-align: center;
+    }
+    .false{
+        background: white;
+    }
+    .true{
+        background: darkseagreen;
     }
 </style>

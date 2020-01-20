@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid w-auto" >
+    <div class="">
 
 <!--
 
@@ -29,19 +29,16 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Number of Tests Reserved</label>
-                        <div v-if="candidate.tests || candidate.reservations_count" >
+                    <div class="form-group font-weight-bold">
+                        <div class="d-inline">Number of Tests Reserved</div>
+                        <div class="d-inline" v-if="candidate.tests || candidate.reservations_count" >
                             <span v-if="candidate.not_paid > 0" class="bg-danger" style="color:white;padding:10px;">{{candidate.tests + candidate.reservations_count}} ({{candidate.not_paid}})</span>
                             <span v-else-if="candidate.not_paid < 0" class="bg-success" style="color:white;padding:10px;">{{candidate.tests + candidate.reservations_count}} ({{Math.abs(candidate.not_paid)}})</span>
                             <span v-else>{{candidate.tests + candidate.reservations_count}} ({{candidate.not_paid}})</span>
                         </div>
-                        <div v-else>
-                            0
-                        </div>
+                        <div class="d-inline" v-else>0</div>
                     </div>
                 </div>
-
 
                 <div class="col-md-6">
                     <div class="form-group">
@@ -73,7 +70,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group ">
-                        <a class="btn btn-info mt-4 btn-block" target="_blank" :href="`/candidate/${candidate.id}`">Open Record</a>
+                        <a class="btn btn-info mt-4 btn-block" :class="{'disabled': !candidate.id}" target="_blank" :href="`/candidate/${candidate.id}`">Open Record</a>
                     </div>
                 </div>
             </div>
@@ -124,6 +121,7 @@
                         if (this.candidates[i].skills_card){
                             this.candidates[i].not_paid = this.candidates[i].reservations_count
                                 + this.candidates[i].tests
+                                + this.candidates[i].absence
                                 - this.candidates[i].skills_card.category.free_tests
                                 - this.candidates[i].payments_count;
                         }
@@ -181,11 +179,25 @@
     }
     .container-fluid{
         width: 1080px;
+        max-width: 100%;
     }
     .button{
         margin: 0 auto;
     }
     .jumbotron{
         background: #fff !important;
+    }
+
+    .menu,
+    select,
+    select option,
+    input,
+    label{
+        font-weight: bold;
+        color: #333
+    }
+
+    input::placeholder{
+        opacity: 0.5;
     }
 </style>

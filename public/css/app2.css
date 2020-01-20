@@ -1,7 +1,11 @@
 body{
     background: #eee!important;
 }
-
+input[type=checkbox]:active,
+input[type=checkbox]:focus{
+    border: none;
+    box-shadow: none;
+}
 #main-container{
     margin: 0 auto;
     font-family: Arial;
@@ -58,10 +62,29 @@ ol{
     background: #28a745;
     color: white;
     font-size: 18px;
+    font-weight: 500;
 }
 .table tbody{
     background: white;
 }
-.table tbody input[type=checkbox]{
-    height: 25px;
+table.exam input:checked ~ .overlay{
+    display: block!important;
 }
+table.exam .overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 128, 0, 0.5);
+    z-index: 2;
+}
+table.exam .review{
+    background: #0b2e13;
+}
+
+label,
+table thead{
+    text-transform: capitalize!important;
+}
+

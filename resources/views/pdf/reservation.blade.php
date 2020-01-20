@@ -1,6 +1,15 @@
 @extends('Layouts.app')
 
 @section('content')
+
+
+
+    <button class="floating-home-btn btn btn-outline-danger print" onclick="window.print()">
+        <i class="fa fa-print text-danger" aria-hidden="true"></i>
+    </button>
+
+
+
     <div dir="rtl" id="main-container-pdf">
         <div id="exam-data">
             <div>

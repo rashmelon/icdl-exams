@@ -5,6 +5,7 @@
             <div class="h3" v-if="candidate.skills_card">
                 {{candidate.skills_card.category.name}}
             </div>
+            <div class=""></div>
         </div>
         <b-card class="shadow mb-4">
             <div class="row">
@@ -54,6 +55,22 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
+                        <label>Absence</label>
+                        <input class="form-control" v-model="candidate['absence']" placeholder="notes">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Certificate</label>
+                    <select class="form-control" v-model="candidate.certificate_state">
+                        <template v-for="(state) in states">
+                            <option :value="state">
+                                {{state}}
+                            </option>
+                        </template>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
                         <label>notes</label>
                         <input class="form-control" v-model="candidate['notes']" placeholder="notes">
                     </div>
@@ -82,18 +99,12 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="col-md-4">
-                    <label>Certificate</label>
-                    <select class="form-control" v-model="candidate.certificate_state">
-                        <template v-for="(state) in states">
-                            <option :value="state">
-                                {{state}}
-                            </option>
-                        </template>
-                    </select>
+                    <div class="form-group">
+                        <label>Finished</label>
+                        <input class="form-control" type="checkbox" v-model="candidate['finished']" placeholder="notes">
+                    </div>
                 </div>
-
                 <div class="col">
                     <div class="form-group">
                         <button class="btn btn-primary" @click="update">Update</button>
@@ -164,6 +175,7 @@
                 data.append('tests', this.candidate.tests);
                 data.append('money', this.candidate.money);
                 data.append('notes', this.candidate.notes);
+                data.append('absence', this.candidate.absence);
                 data.append('certificate_state', this.candidate.certificate_state);
                 data.append('finished', this.candidate.finished?1:0);
                 data.append('skills_card_id', this.candidate.skills_card['id']);
@@ -187,4 +199,5 @@
     .state-1 , .state-true{
         background: rgba(202, 197, 66, 0.64);
     }
+
 </style>

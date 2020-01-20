@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>ICDL Exams</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -68,10 +68,35 @@
                 max-height: 150px;
                 margin-top: 20px;
             }
+
+            .links{
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 40px;
+                display: flex;
+            }
+
+            .links a{
+                background: white;
+                border: 1px solid #c5c5c5;
+                margin: 0 10px;
+                padding: 7px 15px;
+                transition: 0.2s ease-in-out;
+                flex: auto;
+                font-size: 16px;
+            }
+            .links a:hover{
+                background: #333;
+                color: white;
+                /*border:1px dashed;*/
+            }
+
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height" id="app">
+
+
+    <div class="flex-center position-ref full-height position-relative container" id="app">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -86,21 +111,23 @@
                 </div>
             @endif
 
-            <div class="content">
+            <div class="content w-100">
                 <img src="{{asset('logo.png')}}">
 
                 <div class="title m-b-md">
                     ICDL Exams
                 </div>
 
-                <div class="links">
+                <div class="links menu">
                     <a href="/category">Category</a>
                     <a href="/exam">Exams</a>
                     <a href="/instruction">Instructions</a>
                 </div>
 
                 <reserve></reserve>
+
             </div>
         </div>
+
     </body>
 </html>

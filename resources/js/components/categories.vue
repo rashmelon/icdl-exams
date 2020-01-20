@@ -28,7 +28,7 @@
 
         <hr>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-responsive-lg">
             <thead>
                 <tr>
                     <!--<td>index</td>-->
@@ -48,7 +48,7 @@
             <tbody>
                 <tr v-for="(cat, index) in categories">
                     <!--<td width="3%">{{index+1}}</td>-->
-                    <td><input class="form-control" v-model="cat.name"></td>
+                    <td width="20%"><input class="form-control" v-model="cat.name" style="min-width: 140px;"></td>
                     <td width="8%">{{cat.total}}</td>
                     <td width="8%">{{cat.used}}</td>
                     <td width="8%">{{cat.unused}}</td>
@@ -126,14 +126,16 @@
                 });
             },
             remove(index){
-                axios.delete(`/api/category/${this.categories[index].id}`).then((response) => {
-                    window.alert(response.data.message);
-                    if (response.status === 200){
-                        this.categories.splice(index, 1);
-                    }
-                }).catch(function(error){
-                    console.log(error);
-                });
+                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')) {
+                    axios.delete(`/api/category/${this.categories[index].id}`).then((response) => {
+                        window.alert(response.data.message);
+                        if (response.status === 200) {
+                            this.categories.splice(index, 1);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
             },
         }
     }

@@ -125,14 +125,16 @@
                 });
             },
             remove(index){
-                axios.delete(`/api/subject/${this.subjects[index].id}`).then((response) => {
-                    window.alert(response.data.message);
-                    if (response.status === 200){
-                        this.subjects.splice(index, 1);
-                    }
-                }).catch(function(error){
-                    console.log(error);
-                });
+                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')) {
+                    axios.delete(`/api/subject/${this.subjects[index].id}`).then((response) => {
+                        window.alert(response.data.message);
+                        if (response.status === 200) {
+                            this.subjects.splice(index, 1);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
             },
         }
     }

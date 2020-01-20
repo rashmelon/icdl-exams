@@ -114,14 +114,16 @@
                 });
             },
             remove(index){
-                axios.delete(`/api/skills-card/${this.skills[index].id}`).then((response) => {
-                    window.alert(response.data.message);
-                    if (response.status === 200){
-                        this.skills.splice(index, 1);
-                    }
-                }).catch(function(error){
-                    console.log(error);
-                });
+                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')) {
+                    axios.delete(`/api/skills-card/${this.skills[index].id}`).then((response) => {
+                        window.alert(response.data.message);
+                        if (response.status === 200) {
+                            this.skills.splice(index, 1);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
             },
         }
     }

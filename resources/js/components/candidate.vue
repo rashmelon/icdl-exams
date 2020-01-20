@@ -99,6 +99,7 @@
                     <!--<td class="align-middle">Notes</td>-->
                     <td class="align-middle">Cer. State</td>
                     <td class="align-middle">Finished</td>
+                    <td class="align-middle">View</td>
                     <td class="align-middle">Update</td>
                     <td class="align-middle">Delete</td>
                 </tr>
@@ -134,7 +135,7 @@
                         </select>
                     </td>
                     <td><input type="checkbox" class="form-control" v-model="can.finished"></td>
-
+                    <td><a :href="`/candidate/${can.id}`" target="_blank"><button class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
                     <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
                 </tr>
@@ -233,14 +234,16 @@
                 });
             },
             remove(index){
-                axios.delete(`/api/candidate/${this.candidates[index].id}`).then((response) => {
-                    window.alert(response.data.message);
-                    if (response.status === 200){
-                        this.candidates.splice(index, 1);
-                    }
-                }).catch(function(error){
-                    console.log(error);
-                });
+                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')){
+                    axios.delete(`/api/candidate/${this.candidates[index].id}`).then((response) => {
+                        window.alert(response.data.message);
+                        if (response.status === 200){
+                            this.candidates.splice(index, 1);
+                        }
+                    }).catch(function(error){
+                        console.log(error);
+                    });
+                }
             },
 
         }
