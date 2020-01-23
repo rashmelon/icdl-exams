@@ -81,6 +81,17 @@
             </b-card>
         </b-collapse>
 
+        <hr>
+
+        <div style="text-align: center">
+            <button @click="minusOne">
+                <i class="fa fa-3x fa-arrow-circle-left" aria-hidden="true"></i>
+            </button>
+            <input type="number" v-model="page" style="width:40px" @change="getData">
+            <button @click="plusOne">
+                <i class="fa fa-3x fa-arrow-circle-right" aria-hidden="true"></i>
+            </button>
+        </div>
 
         <hr>
 
@@ -106,7 +117,7 @@
             </thead>
             <tbody class="table-hover">
                 <tr v-for="(can, index) in candidates" :class="'state-'+can.finished">
-                    <td>{{index+1}}</td>
+                    <td>{{(page-1)*100+index+1}}</td>
                     <td v-if="can.skills_card && can.skills_card.number">{{can.skills_card.number}}</td>
                     <td v-else-if="can.skills_card || can.skills_card ===0">{{skillsCards[can.skills_card].number}}</td>
                     <td v-else>
@@ -156,7 +167,10 @@
                 candidate: {'skills_card':[], 'mobile2':''},
                 candidates: [],
                 skillsCards: [],
+                page: 1,
+                lastPage: 1,
                 states:['', 'arrived', 'delivered'],
+                baseUrl: `/api/candidate?category_id=${this.category.id}&reservations_count=true`,
             }
         },
         mounted(){
@@ -170,8 +184,10 @@
         },
         methods:{
             getData(){
-                axios.get(`/api/candidate?category_id=${this.category.id}&reservations_count=true`).then((response) => {
-                    this.candidates = response.data.data;
+                axios.get(`${this.baseUrl}&paginate=100&page=${this.page}`).then((response) => {
+                    this.candidates = response.data.data.data;
+                    this.page = response.data.data.current_page;
+                    this.lastPage = response.data.data.last_page;
                 }).catch(function(error){
                     console.log(error);
                 });
@@ -179,7 +195,6 @@
             getSkills(){
                 axios.get(`/api/skills-card?category_id=${this.category.id}&unused=true`).then((response) => {
                     this.skillsCards = response.data.data;
-                    console.log(response);
                 }).catch(function(error){
                     console.log(error);
                 });
@@ -250,7 +265,18 @@
                     });
                 }
             },
-
+            plusOne(){
+                if (this.page < this.lastPage){
+                    this.page++;
+                    this.getData();
+                }
+            },
+            minusOne(){
+                if (this.page > 1){
+                    this.page--;
+                    this.getData();
+                }
+            }
         }
     }
 </script>

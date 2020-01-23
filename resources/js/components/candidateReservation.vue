@@ -26,7 +26,7 @@
                             <label>Exam</label>
                             <select type="" class="form-control" v-model="exam">
                                 <option v-for="ex in exams" :value="ex">
-                                    {{ ex.date }} - {{ ex.time }}
+                                    {{ ex.date }} - {{ new Date(Date.parse(ex.date+' '+ex.time)).getHours() <= 12? new Date(Date.parse(ex.date+' '+ex.time)).getHours() : new Date(Date.parse(ex.date+' '+ex.time)).getHours() - 12}}
                                 </option>
                             </select>
                         </div>
@@ -45,7 +45,7 @@
             <tr>
                 <td class="align-middle" width="2%">index</td>
                 <td class="align-middle" width="5%">subject</td>
-                <td class="align-middle" width="5%">Date</td>
+                <td class="align-middle" width="10%">Date</td>
                 <td class="align-middle" width="10%">Notes</td>
                 <td class="align-middle text-center" width="10%">Exam</td>
                 <td class="align-middle text-center" width="10%">Delete</td>
@@ -55,7 +55,7 @@
             <tr v-for="(res, index) in reservations">
                 <td>{{index+1}}</td>
                 <td>{{res.subject.name}}</td>
-                <td>{{res.exam.date +'@'+ res.exam.time}}</td>
+                <td>{{res.exam.date}} at {{new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() <= 12? new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() : new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() - 12}}</td>
                 <td>{{res.notes}}</td>
                 <td class="text-center"><a :href="`/exam/${res.exam.id}`"><button class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
                 <td class="text-center"><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>

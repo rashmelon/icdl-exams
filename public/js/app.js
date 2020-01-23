@@ -1987,6 +1987,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "candidate",
@@ -1998,7 +2009,10 @@ __webpack_require__.r(__webpack_exports__);
       },
       candidates: [],
       skillsCards: [],
-      states: ['', 'arrived', 'delivered']
+      page: 1,
+      lastPage: 1,
+      states: ['', 'arrived', 'delivered'],
+      baseUrl: "/api/candidate?category_id=".concat(this.category.id, "&reservations_count=true")
     };
   },
   mounted: function mounted() {
@@ -2014,8 +2028,10 @@ __webpack_require__.r(__webpack_exports__);
     getData: function getData() {
       var _this = this;
 
-      axios.get("/api/candidate?category_id=".concat(this.category.id, "&reservations_count=true")).then(function (response) {
-        _this.candidates = response.data.data;
+      axios.get("".concat(this.baseUrl, "&paginate=100&page=").concat(this.page)).then(function (response) {
+        _this.candidates = response.data.data.data;
+        _this.page = response.data.data.current_page;
+        _this.lastPage = response.data.data.last_page;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2025,7 +2041,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/skills-card?category_id=".concat(this.category.id, "&unused=true")).then(function (response) {
         _this2.skillsCards = response.data.data;
-        console.log(response);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2102,6 +2117,18 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           console.log(error);
         });
+      }
+    },
+    plusOne: function plusOne() {
+      if (this.page < this.lastPage) {
+        this.page++;
+        this.getData();
+      }
+    },
+    minusOne: function minusOne() {
+      if (this.page > 1) {
+        this.page--;
+        this.getData();
       }
     }
   }
@@ -3167,13 +3194,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "skillsCard",
   data: function data() {
     return {
       skillCard: [],
       skills: [],
-      used: ['used', 'unused']
+      used: ['used', 'unused'],
+      page: 1,
+      lastPage: 1,
+      baseUrl: "/api/skills-card?category_id=".concat(this.category.id)
     };
   },
   mounted: function mounted() {
@@ -3188,8 +3230,10 @@ __webpack_require__.r(__webpack_exports__);
     getData: function getData() {
       var _this = this;
 
-      axios.get("/api/skills-card?category_id=".concat(this.category.id)).then(function (response) {
-        _this.skills = response.data.data;
+      axios.get("".concat(this.baseUrl, "&paginate=100&page=").concat(this.page)).then(function (response) {
+        _this.skills = response.data.data.data;
+        _this.page = response.data.data.current_page;
+        _this.lastPage = response.data.data.last_page;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3239,6 +3283,18 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           console.log(error);
         });
+      }
+    },
+    plusOne: function plusOne() {
+      if (this.page < this.lastPage) {
+        this.page++;
+        this.getData();
+      }
+    },
+    minusOne: function minusOne() {
+      if (this.page > 1) {
+        this.page--;
+        this.getData();
       }
     }
   }
@@ -55087,6 +55143,47 @@ var render = function() {
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
+      _c("div", { staticStyle: { "text-align": "center" } }, [
+        _c("button", { on: { click: _vm.minusOne } }, [
+          _c("i", {
+            staticClass: "fa fa-3x fa-arrow-circle-left",
+            attrs: { "aria-hidden": "true" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.page,
+              expression: "page"
+            }
+          ],
+          staticStyle: { width: "40px" },
+          attrs: { type: "number" },
+          domProps: { value: _vm.page },
+          on: {
+            change: _vm.getData,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.page = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("button", { on: { click: _vm.plusOne } }, [
+          _c("i", {
+            staticClass: "fa fa-3x fa-arrow-circle-right",
+            attrs: { "aria-hidden": "true" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
       _c("table", { staticClass: "table table-bordered table-hoverable" }, [
         _vm._m(1),
         _vm._v(" "),
@@ -55095,7 +55192,7 @@ var render = function() {
           { staticClass: "table-hover" },
           _vm._l(_vm.candidates, function(can, index) {
             return _c("tr", { class: "state-" + can.finished }, [
-              _c("td", [_vm._v(_vm._s(index + 1))]),
+              _c("td", [_vm._v(_vm._s((_vm.page - 1) * 100 + index + 1))]),
               _vm._v(" "),
               can.skills_card && can.skills_card.number
                 ? _c("td", [_vm._v(_vm._s(can.skills_card.number))])
@@ -55894,7 +55991,17 @@ var render = function() {
                           "\n                                " +
                             _vm._s(ex.date) +
                             " - " +
-                            _vm._s(ex.time) +
+                            _vm._s(
+                              new Date(
+                                Date.parse(ex.date + " " + ex.time)
+                              ).getHours() <= 12
+                                ? new Date(
+                                    Date.parse(ex.date + " " + ex.time)
+                                  ).getHours()
+                                : new Date(
+                                    Date.parse(ex.date + " " + ex.time)
+                                  ).getHours() - 12
+                            ) +
                             "\n                            "
                         )
                       ])
@@ -55942,7 +56049,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "td",
-                { staticClass: "align-middle", attrs: { width: "5%" } },
+                { staticClass: "align-middle", attrs: { width: "10%" } },
                 [_vm._v("Date")]
               ),
               _vm._v(" "),
@@ -55981,7 +56088,23 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(res.subject.name))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(res.exam.date + "@" + res.exam.time))]),
+                _c("td", [
+                  _vm._v(
+                    _vm._s(res.exam.date) +
+                      " at " +
+                      _vm._s(
+                        new Date(
+                          Date.parse(res.exam.date + " " + res.exam.time)
+                        ).getHours() <= 12
+                          ? new Date(
+                              Date.parse(res.exam.date + " " + res.exam.time)
+                            ).getHours()
+                          : new Date(
+                              Date.parse(res.exam.date + " " + res.exam.time)
+                            ).getHours() - 12
+                      )
+                  )
+                ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(res.notes))]),
                 _vm._v(" "),
@@ -57474,6 +57597,47 @@ var render = function() {
         ],
         1
       ),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticStyle: { "text-align": "center" } }, [
+        _c("button", { on: { click: _vm.minusOne } }, [
+          _c("i", {
+            staticClass: "fa fa-3x fa-arrow-circle-left",
+            attrs: { "aria-hidden": "true" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.page,
+              expression: "page"
+            }
+          ],
+          staticStyle: { width: "40px" },
+          attrs: { type: "number" },
+          domProps: { value: _vm.page },
+          on: {
+            change: _vm.getData,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.page = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("button", { on: { click: _vm.plusOne } }, [
+          _c("i", {
+            staticClass: "fa fa-3x fa-arrow-circle-right",
+            attrs: { "aria-hidden": "true" }
+          })
+        ])
+      ]),
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
@@ -71776,14 +71940,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!***********************************************!*\
   !*** ./resources/js/components/candidate.vue ***!
   \***********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _candidate_vue_vue_type_template_id_720ed370_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate.vue?vue&type=template&id=720ed370&scoped=true& */ "./resources/js/components/candidate.vue?vue&type=template&id=720ed370&scoped=true&");
 /* harmony import */ var _candidate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./candidate.vue?vue&type=script&lang=js& */ "./resources/js/components/candidate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _candidate_vue_vue_type_style_index_0_id_720ed370_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./candidate.vue?vue&type=style&index=0&id=720ed370&scoped=true&lang=css& */ "./resources/js/components/candidate.vue?vue&type=style&index=0&id=720ed370&scoped=true&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _candidate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _candidate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _candidate_vue_vue_type_style_index_0_id_720ed370_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./candidate.vue?vue&type=style&index=0&id=720ed370&scoped=true&lang=css& */ "./resources/js/components/candidate.vue?vue&type=style&index=0&id=720ed370&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -71815,7 +71980,7 @@ component.options.__file = "resources/js/components/candidate.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/candidate.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

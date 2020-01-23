@@ -10,7 +10,15 @@ class SkillsCardController extends Controller
 {
     public function index()
     {
-        return $this->respond('All Skills Fetched Successfully', $this->applyFilters(SkillsCard::orderBy('used', 'asc')->orderBy('number', 'asc')->with('category'))->get());
+        $paginate = \request()->paginate;
+        $builder = $this->applyFilters(SkillsCard::orderBy('used', 'asc')->orderBy('number', 'asc')->with('category'));
+        if ($paginate){
+            $response = $builder->paginate($paginate);
+        }
+        else{
+            $response = $builder->get();
+        }
+        return $this->respond('All Records Fetched Successfully', $response);
     }
 
     public function store()

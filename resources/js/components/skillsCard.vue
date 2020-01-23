@@ -28,6 +28,18 @@
 
         <hr>
 
+        <div style="text-align: center">
+            <button @click="minusOne">
+                <i class="fa fa-3x fa-arrow-circle-left" aria-hidden="true"></i>
+            </button>
+            <input type="number" v-model="page" style="width:40px" @change="getData">
+            <button @click="plusOne">
+                <i class="fa fa-3x fa-arrow-circle-right" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <hr>
+
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -67,7 +79,10 @@
             return {
                 skillCard: [],
                 skills: [],
-                used: ['used', 'unused']
+                used: ['used', 'unused'],
+                page: 1,
+                lastPage: 1,
+                baseUrl: `/api/skills-card?category_id=${this.category.id}`,
             }
         },
         mounted(){
@@ -80,8 +95,10 @@
         },
         methods:{
             getData(){
-                axios.get(`/api/skills-card?category_id=${this.category.id}`).then((response) => {
-                    this.skills = response.data.data;
+                axios.get(`${this.baseUrl}&paginate=100&page=${this.page}`).then((response) => {
+                    this.skills = response.data.data.data;
+                    this.page = response.data.data.current_page;
+                    this.lastPage = response.data.data.last_page;
                 }).catch(function(error){
                     console.log(error);
                 });
@@ -125,6 +142,18 @@
                     });
                 }
             },
+            plusOne(){
+                if (this.page < this.lastPage){
+                    this.page++;
+                    this.getData();
+                }
+            },
+            minusOne(){
+                if (this.page > 1){
+                    this.page--;
+                    this.getData();
+                }
+            }
         }
     }
 </script>

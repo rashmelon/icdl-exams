@@ -11,7 +11,15 @@ class CandidateController extends Controller
 {
     public function index()
     {
-        return $this->respond('All Records Fetched Successfully', $this->applyFilters(Candidate::with(['skillsCard.category']))->get());
+        $paginate = \request()->paginate;
+        $builder = $this->applyFilters(Candidate::with(['skillsCard.category']));
+        if ($paginate){
+            $response = $builder->paginate($paginate);
+        }
+        else{
+            $response = $builder->get();
+        }
+        return $this->respond('All Records Fetched Successfully', $response);
     }
 
     public function store(CandidateRequest $request)
