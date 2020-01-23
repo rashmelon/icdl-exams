@@ -12,4 +12,9 @@ class Payment extends Model
     {
         return $this->belongsTo(Candidate::class, 'candidate_id');
     }
+
+    public function getCreatedAtAttribute($date)
+    {
+        return date('d/m/Y', strtotime($date));
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableCadidateAddAbsence extends Migration
+class AlterTableCandidateSetNationalIdUnique extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AlterTableCadidateAddAbsence extends Migration
     public function up()
     {
         Schema::table('candidates', function (Blueprint $table) {
-            $table->integer('absence')->default(0)->nullable();
+            $table->unique('national_id');
         });
     }
 
@@ -25,8 +25,6 @@ class AlterTableCadidateAddAbsence extends Migration
      */
     public function down()
     {
-        Schema::table('candidates', function (Blueprint $table) {
-            $table->dropColumn('absence');
-        });
+        //
     }
 }

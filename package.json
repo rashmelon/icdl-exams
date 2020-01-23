@@ -28,6 +28,7 @@
         "jquery": "^3.4.1",
         "v-autocomplete": "^1.8.2",
         "vue-axios": "^2.1.5",
+        "vue-popperjs": "^2.3.0",
         "vue-suggestion": "^1.0.0"
     }
 }

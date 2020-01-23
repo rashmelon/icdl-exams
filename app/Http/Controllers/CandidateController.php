@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Candidate;
+use App\Http\Requests\CandidateRequest;
 use App\SkillsCard;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,13 @@ class CandidateController extends Controller
         return $this->respond('All Records Fetched Successfully', $this->applyFilters(Candidate::with(['skillsCard.category']))->get());
     }
 
-    public function store()
+    public function store(CandidateRequest $request)
     {
-        $data = request()->all();
+        $data = $request->validated();
+
+        if (Candidate::where('skills_card_id', $data['skills_card_id'])->first()){
+            return $this->respond('Skills card already assigned to a candidate', [], 422);
+        }
 
         $candidate = Candidate::create($data);
 
@@ -32,6 +37,10 @@ class CandidateController extends Controller
 
         $data = request()->all();
 
+        if (Candidate::where('skills_card_id', $data['skills_card_id'])->first()){
+            return $this->respond('Skills card already assigned to a candidate', [], 422);
+        }
+
         if (array_key_exists('skills_card_id', $data)){
             SkillsCard::where('id', $data['skills_card_id'])->first()->update(['used' => 1]);
         }
@@ -43,7 +52,11 @@ class CandidateController extends Controller
 
     public function destroy($id)
     {
-        Candidate::find($id)->delete();
+        $candidate = Candidate::find($id);
+
+        SkillsCard::where('id', $candidate->skills_card_id)->first()->update(['used' => 0]);
+
+        $candidate->delete();
 
         return $this->respond('Deleted Successfully');
     }
@@ -55,6 +68,9 @@ class CandidateController extends Controller
         }
         if (request()->category_id){
             $builder->category(\request()->category_id);
+        }
+        if (request()->unassigned){
+            $builder->unAssigned();
         }
         return $builder;
     }

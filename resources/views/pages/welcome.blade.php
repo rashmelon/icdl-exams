@@ -9,87 +9,12 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/app2.css') }}" type="text/css">
         <script src="{{ asset('js/app.js') }}" async defer></script>
 
         <!-- Styles -->
         <style>
-            html, body {
-                background-color: #eee;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                /*align-items: center;*/
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 60px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-
-            img{
-                max-height: 150px;
-                margin-top: 20px;
-            }
-
-            .links{
-                font-weight: bold;
-                color: #333;
-                margin-bottom: 40px;
-                display: flex;
-            }
-
-            .links a{
-                background: white;
-                border: 1px solid #c5c5c5;
-                margin: 0 10px;
-                padding: 7px 15px;
-                transition: 0.2s ease-in-out;
-                flex: auto;
-                font-size: 16px;
-            }
-            .links a:hover{
-                background: #333;
-                color: white;
-                /*border:1px dashed;*/
-            }
 
         </style>
     </head>
@@ -112,7 +37,7 @@
             @endif
 
             <div class="content w-100">
-                <img src="{{asset('logo.png')}}">
+                <img class="img-bg" src="{{asset('logo.png')}}">
 
                 <div class="title m-b-md">
                     ICDL Exams
@@ -122,6 +47,7 @@
                     <a href="/category">Category</a>
                     <a href="/exam">Exams</a>
                     <a href="/instruction">Instructions</a>
+                    <a href="/un-assigned-candidate">Unassigned</a>
                 </div>
 
                 <reserve></reserve>

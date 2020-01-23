@@ -125,7 +125,7 @@
                 });
             },
             remove(index){
-                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')) {
+                if(confirm('Are you sure you want to delete it?!')) {
                     axios.delete(`/api/subject/${this.subjects[index].id}`).then((response) => {
                         window.alert(response.data.message);
                         if (response.status === 200) {

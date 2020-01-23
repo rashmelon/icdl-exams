@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('pages.welcome');
-});
+})->name('home');
 
 Route::get('/reserve', function () {
     return view('pages.reserve');
@@ -21,7 +21,7 @@ Route::get('/reserve', function () {
 
 
 Route::group(['prefix' => 'category'], function (){
-    Route::view('', 'pages.category');
+    Route::view('', 'pages.category')->name('category');
 
     Route::get('{id}', function ($id){
         return view('pages.view_category', ['category' =>\App\Category::find($id)]);
@@ -43,7 +43,7 @@ Route::group(['prefix' => 'category'], function (){
 
 
 Route::group(['prefix' => 'exam'], function (){
-    Route::view('', 'pages.exam');
+    Route::view('', 'pages.exam')->name('exam');
 
     Route::get('{id}', function ($id){
         return view('pages.view_exam', ['exam' =>\App\Exam::find($id)]);
@@ -64,7 +64,7 @@ Route::get('reservation-pdf/{id}', function ($id){
 
 Route::get('generate-reservation-pdf/{id}', 'PDF\ReservationController@create');
 
-Route::view('instruction', 'pages.instruction');
+Route::view('instruction', 'pages.instruction')->name('instruction');
 
 
 Route::get('candidate/{id}', function ($id){
@@ -72,5 +72,7 @@ Route::get('candidate/{id}', function ($id){
         'candidate' => \App\Candidate::where('id', $id)->with(['skillsCard.category'])->first(),
     ]);
 })->name('reservation-pdf');
+
+Route::view('un-assigned-candidate', 'pages.un_assigned_candidate')->name('unassigned');
 
 Route::view('excel', 'pages.submit_excel');

@@ -5,6 +5,9 @@
  */
 
 require('./bootstrap');
+require('./popper.min.js');
+
+
 import Vue from 'vue';
 window.Vue = require('vue');
 /**
@@ -24,6 +27,7 @@ Vue.component('view-category', require('./components/viewCategory.vue').default)
 Vue.component('skills-card', require('./components/skillsCard.vue').default);
 Vue.component('subject', require('./components/subject.vue').default);
 Vue.component('candidate', require('./components/candidate.vue').default);
+Vue.component('un-assigned-candidate', require('./components/unAssignedCandidate.vue').default);
 Vue.component('exam', require('./components/exam.vue').default);
 Vue.component('view-exam', require('./components/viewExam.vue').default);
 Vue.component('reserve', require('./components/reserve.vue').default);
@@ -46,6 +50,7 @@ Vue.component('view-candidate', require('./components/viewCandidate.vue').defaul
 * */
 import BootstrapVue from 'bootstrap-vue'; //Importing
 Vue.use(BootstrapVue); // Telling Vue to use this in whole application
+
 
 
 

@@ -12,7 +12,7 @@ class Exam extends Model
     protected $fillable = ['date', 'time'];
 
     public function newQuery($excludeDeleted = true) {
-        return parent::newQuery()->reservationsCount();
+        return parent::newQuery()->reservationsCount()->officeCount()->noOfficeCount();
     }
 
     public function scopeComing($query)
@@ -23,5 +23,23 @@ class Exam extends Model
     public function scopePast($query)
     {
         return $query->where('date', '<', today());
+    }
+
+    public function scopeOfficeCount($query)
+    {
+        $query->withCount(['reservations as office_count'=> function ($query){
+            $query->whereHas('subject', function ($query){
+                $query->where('office', 0);
+            });
+        }]);
+    }
+
+    public function scopeNoOfficeCount($query)
+    {
+        $query->withCount(['reservations as no_office_count' => function ($query){
+            $query->whereHas('subject', function ($query){
+                $query->where('office', 1);
+            });
+        }]);
     }
 }

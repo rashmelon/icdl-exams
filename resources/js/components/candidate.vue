@@ -198,12 +198,17 @@
                     data.append('skills_card_id', this.candidate['skills_card']['id']);
 
                 axios.post(`/api/candidate`, data).then((response) => {
-                    window.alert(response.data.message);
                     if (response.status === 200){
+                        window.alert(response.data.message);
                         this.candidates.push(response.data.data);
                         this.candidate = {'skills_card':[]};
                     }
                 }).catch(function(error){
+                    if (error.response.data.errors && error.response.data.errors.national_id)
+                        window.alert(error.response.data.errors.national_id[0]);
+                    else{
+                        window.alert(error.response.data.message);
+                    }
                     console.log(error);
                 });
             },
@@ -234,7 +239,7 @@
                 });
             },
             remove(index){
-                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')){
+                if(confirm('Are you sure you want to delete it?!')){
                     axios.delete(`/api/candidate/${this.candidates[index].id}`).then((response) => {
                         window.alert(response.data.message);
                         if (response.status === 200){

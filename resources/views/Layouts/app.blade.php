@@ -41,6 +41,9 @@
 
         /* override styles when printing */
         @media print {
+            nav,
+            .print,
+            .options,
             .floating-home-btn{
                 display: none;
             }
@@ -49,11 +52,83 @@
                 color: #000;
                 background-color: #fff;
             }
-
         }
         .print{
-            top: 35px;
+            top: 135px;
         }
+
+        #app{
+            margin-top: 70px;
+        }
+
+        .options-btn {
+            bottom: 120px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+        }
+        .options-btn i{
+            font-size: 25px;
+            padding: 0;
+            transition: all 0.3s ease-in-out;
+        }
+        .options-btn:hover>i{
+            transform: rotate(135deg);
+        }
+        .options{
+            transition: all 0.3s ease-in-out;
+        }
+        .options-btn .options{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding-bottom: 50px;
+        }
+        .options .btn{
+            display: none;
+        }
+        .options-btn:hover .btn{
+            display: block;
+        }
+
+        .options .btn{
+            margin-top: 15px;
+            padding: 9px;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            position: relative;
+        }
+        .options i{
+            font-size: 14px;
+
+        }
+        .options .popper:after{
+            content: '';
+            position: absolute;
+            top: 30%;
+            right: -12px;
+            border: 7px solid transparent;
+            border-bottom-color: rgba(255,255,255,0.8);
+            transform: rotate(90deg);
+        }
+
+        .options .popper{
+            position: absolute;
+            right: 50px;
+            top: 0;
+            background: rgba(255,255,255,0.8);
+            padding: 0 10px;
+            border-radius: 7px;
+            color: #000;
+            display: none;
+            width: max-content;
+        }
+        .options .btn:hover .popper{
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -63,6 +138,40 @@
     <i class="fa fa-home text-primary" aria-hidden="true"></i>
 </a>
 
+
+<div class="floating-home-btn options-btn btn btn-outline-success">
+    <span class="btn success-btn p-0 text-center d-block">
+        <i class="fa fa-cog text-success d-flex justify-content-center align-items-center" aria-hidden="true"></i>
+    </span>
+
+    <div class="options">
+        <div class="btn btn-info rounded-circle">
+            <a href="/category">
+                <i class="fa fa-bookmark" aria-hidden="true"></i>
+                <span class="popper">Category</span>
+            </a>
+        </div>
+        <div class="btn btn-info rounded-circle">
+            <a href="/exam">
+                <i class="fa fa-address-book" aria-hidden="true"></i>
+                <span class="popper">Exam</span>
+            </a>
+        </div>
+        <div class="btn btn-info rounded-circle">
+            <a href="/instruction">
+                <i class="fa fa-database" aria-hidden="true"></i>
+                <span class="popper">Instruction</span>
+            </a>
+        </div>
+        <div class="btn btn-info rounded-circle">
+            <a href="/un-assigned-candidate">
+                <i class="fa fa-child" aria-hidden="true"></i>
+                <span class="popper">Unassigned Candidate</span>
+            </a>
+        </div>
+    </div>
+</div>
+@include('partials.header')
 <div id="app" class="position-relative">
     @yield('content')
 </div>

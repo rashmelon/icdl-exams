@@ -61,4 +61,9 @@ class Candidate extends Model
             }
         ]);
     }
+
+    public function scopeUnAssigned($query)
+    {
+        $query->where('skills_card_id', null);
+    }
 }

@@ -30,6 +30,7 @@
                 <tr>
                     <td class="align-middle" width="2%">index</td>
                     <td class="align-middle" width="10%">Payment</td>
+                    <td class="align-middle" width="10%">Date</td>
                     <td class="align-middle" width="1%">Update</td>
                     <td class="align-middle" width="1%">Delete</td>
                 </tr>
@@ -38,6 +39,7 @@
                 <tr v-for="(pay, index) in payments">
                     <td>{{index+1}}</td>
                     <td><input type="number" v-model="pay.amount" class="form-control"></td>
+                    <td>{{pay.created_at}}</td>
                     <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
                 </tr>
@@ -101,7 +103,7 @@
                 });
             },
             remove(index){
-                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')) {
+                if(confirm('Are you sure you want to delete it?!')) {
                     axios.delete(`/api/payment/${this.payments[index].id}`).then((response) => {
                         window.alert(response.data.message);
                         if (response.status === 200) {

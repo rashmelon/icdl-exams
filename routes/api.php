@@ -42,3 +42,16 @@ Route::post('instruction/{id}', 'InstructionController@update');
 Route::resource('instruction', 'InstructionController');
 
 Route::post('excel', 'ExcelController@create');
+
+Route::get('skills-card-create', function (){
+    $start = 298629;
+    $end = 298678;
+    for ($i = 0; $i < 50; $i++){
+        \App\SkillsCard::create([
+            'number' => "EGT 200 $start",
+            'category_id' => 2,
+            'used' => 0
+        ]);
+        $start++;
+    }
+});

@@ -10,7 +10,7 @@ class SkillsCardController extends Controller
 {
     public function index()
     {
-        return $this->respond('All Skills Fetched Successfully', $this->applyFilters(SkillsCard::orderBy('used', 'desc')->orderBy('number', 'desc')->with('category'))->get());
+        return $this->respond('All Skills Fetched Successfully', $this->applyFilters(SkillsCard::orderBy('used', 'asc')->orderBy('number', 'asc')->with('category'))->get());
     }
 
     public function store()

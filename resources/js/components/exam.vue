@@ -50,6 +50,8 @@
                     <td width="5%" class="align-middle">Date</td>
                     <td class="align-middle">Time</td>
                     <td class="align-middle">Reservations</td>
+                    <td class="align-middle">Office</td>
+                    <td class="align-middle">No Office</td>
                     <td width="5%" class="align-middle">View</td>
                     <td width="5%" class="align-middle">Update</td>
                     <td width="5%" class="align-middle">Delete</td>
@@ -61,6 +63,8 @@
                     <td><input type="date" class="form-control text-right" v-model="ex.date"></td>
                     <td><input type="time" class="form-control" v-model="ex.time"></td>
                     <td>{{ex.reservations_count}}</td>
+                    <td>{{ex.office_count}}</td>
+                    <td>{{ex.no_office_count}}</td>
                     <td width="3%"><a :href="'/exam/'+ex.id"><button class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
                     <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                     <td><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
@@ -126,7 +130,7 @@
                 });
             },
             remove(index){
-                if(confirm('Are you sure you want to delete it? \n اتاكد تاني!')) {
+                if(confirm('Are you sure you want to delete it?!')) {
                     axios.delete(`/api/exam/${this.exams[index].id}`).then((response) => {
                         window.alert(response.data.message);
                         if (response.status === 200) {
