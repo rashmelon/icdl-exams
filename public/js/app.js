@@ -2348,6 +2348,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "candidateReservation",
   data: function data() {
@@ -2429,15 +2448,30 @@ __webpack_require__.r(__webpack_exports__);
         window.alert('Please choose subject');
       }
     },
-    remove: function remove(index) {
+    update: function update(index) {
       var _this5 = this;
+
+      var data = new FormData();
+      data.append('exam_id', this.reservations[index].exam_id);
+      data.append('subject_id', this.reservations[index].subject_id);
+      axios.post("/api/reservation/".concat(this.reservations[index].id), data).then(function (response) {
+        if (response.status === 200) {
+          window.open("/reservation-pdf/".concat(_this5.reservations[index].id));
+        }
+      })["catch"](function (error) {
+        window.alert(error.response.message);
+        console.log(error.response);
+      });
+    },
+    remove: function remove(index) {
+      var _this6 = this;
 
       if (confirm('Are you sure you want to delete it?!')) {
         axios["delete"]("/api/reservation/".concat(this.reservations[index].id)).then(function (response) {
           window.alert(response.data.message);
 
           if (response.status === 200) {
-            _this5.reservations.splice(index, 1);
+            _this6.reservations.splice(index, 1);
           }
         })["catch"](function (error) {
           window.alert(error.response.data.message);
@@ -56037,25 +56071,21 @@ var render = function() {
             _c("tr", [
               _c(
                 "td",
-                { staticClass: "align-middle", attrs: { width: "2%" } },
-                [_vm._v("index")]
+                { staticClass: "align-middle", attrs: { width: "1%" } },
+                [_vm._v("#")]
               ),
+              _vm._v(" "),
+              _c(
+                "td",
+                { staticClass: "align-middle", attrs: { width: "25%" } },
+                [_vm._v("subject")]
+              ),
+              _vm._v(" "),
+              _c("td", { staticClass: "align-middle" }, [_vm._v("Date")]),
               _vm._v(" "),
               _c(
                 "td",
                 { staticClass: "align-middle", attrs: { width: "5%" } },
-                [_vm._v("subject")]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { width: "10%" } },
-                [_vm._v("Date")]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { width: "10%" } },
                 [_vm._v("Notes")]
               ),
               _vm._v(" "),
@@ -56063,7 +56093,7 @@ var render = function() {
                 "td",
                 {
                   staticClass: "align-middle text-center",
-                  attrs: { width: "10%" }
+                  attrs: { width: "5%" }
                 },
                 [_vm._v("Exam")]
               ),
@@ -56072,7 +56102,16 @@ var render = function() {
                 "td",
                 {
                   staticClass: "align-middle text-center",
-                  attrs: { width: "10%" }
+                  attrs: { width: "5%" }
+                },
+                [_vm._v("Update")]
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "align-middle text-center",
+                  attrs: { width: "5%" }
                 },
                 [_vm._v("Delete")]
               )
@@ -56086,25 +56125,137 @@ var render = function() {
               return _c("tr", [
                 _c("td", [_vm._v(_vm._s(index + 1))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(res.subject.name))]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(
-                    _vm._s(res.exam.date) +
-                      " at " +
-                      _vm._s(
-                        new Date(
-                          Date.parse(res.exam.date + " " + res.exam.time)
-                        ).getHours() <= 12
-                          ? new Date(
-                              Date.parse(res.exam.date + " " + res.exam.time)
-                            ).getHours()
-                          : new Date(
-                              Date.parse(res.exam.date + " " + res.exam.time)
-                            ).getHours() - 12
+                new Date(res.exam.date) > new Date()
+                  ? _c("td", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: res.subject_id,
+                              expression: "res.subject_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                res,
+                                "subject_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.subjects, function(sub) {
+                          return _c("option", { domProps: { value: sub.id } }, [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(sub.name) +
+                                "\n                    "
+                            )
+                          ])
+                        }),
+                        0
                       )
-                  )
-                ]),
+                    ])
+                  : _c("td", [_vm._v(_vm._s(res.subject.name))]),
+                _vm._v(" "),
+                new Date(res.exam.date) > new Date()
+                  ? _c("td", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: res.exam_id,
+                              expression: "res.exam_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                res,
+                                "exam_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.exams, function(ex) {
+                          return _c("option", { domProps: { value: ex.id } }, [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(ex.date) +
+                                " - " +
+                                _vm._s(
+                                  new Date(
+                                    Date.parse(ex.date + " " + ex.time)
+                                  ).getHours() <= 12
+                                    ? new Date(
+                                        Date.parse(ex.date + " " + ex.time)
+                                      ).getHours()
+                                    : new Date(
+                                        Date.parse(ex.date + " " + ex.time)
+                                      ).getHours() - 12
+                                ) +
+                                "\n                    "
+                            )
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  : _c("td", [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(res.exam.date) +
+                          " - " +
+                          _vm._s(
+                            new Date(
+                              Date.parse(res.exam.date + " " + res.exam.time)
+                            ).getHours() <= 12
+                              ? new Date(
+                                  Date.parse(
+                                    res.exam.date + " " + res.exam.time
+                                  )
+                                ).getHours()
+                              : new Date(
+                                  Date.parse(
+                                    res.exam.date + " " + res.exam.time
+                                  )
+                                ).getHours() - 12
+                          ) +
+                          "\n            "
+                      )
+                    ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(res.notes))]),
                 _vm._v(" "),
@@ -56117,6 +56268,26 @@ var render = function() {
                       })
                     ])
                   ])
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.update(index)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-pencil-square-o",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ]
+                  )
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center" }, [
@@ -71940,15 +72111,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!***********************************************!*\
   !*** ./resources/js/components/candidate.vue ***!
   \***********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _candidate_vue_vue_type_template_id_720ed370_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./candidate.vue?vue&type=template&id=720ed370&scoped=true& */ "./resources/js/components/candidate.vue?vue&type=template&id=720ed370&scoped=true&");
 /* harmony import */ var _candidate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./candidate.vue?vue&type=script&lang=js& */ "./resources/js/components/candidate.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _candidate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _candidate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _candidate_vue_vue_type_style_index_0_id_720ed370_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./candidate.vue?vue&type=style&index=0&id=720ed370&scoped=true&lang=css& */ "./resources/js/components/candidate.vue?vue&type=style&index=0&id=720ed370&scoped=true&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _candidate_vue_vue_type_style_index_0_id_720ed370_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./candidate.vue?vue&type=style&index=0&id=720ed370&scoped=true&lang=css& */ "./resources/js/components/candidate.vue?vue&type=style&index=0&id=720ed370&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -71980,7 +72150,7 @@ component.options.__file = "resources/js/components/candidate.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/candidate.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -43,21 +43,40 @@
         <table class="table table-bordered table-hover table-responsive ">
             <thead class="thead-dark bg-dark text-white">
             <tr>
-                <td class="align-middle" width="2%">index</td>
-                <td class="align-middle" width="5%">subject</td>
-                <td class="align-middle" width="10%">Date</td>
-                <td class="align-middle" width="10%">Notes</td>
-                <td class="align-middle text-center" width="10%">Exam</td>
-                <td class="align-middle text-center" width="10%">Delete</td>
+                <td class="align-middle" width="1%">#</td>
+                <td class="align-middle" width="25%">subject</td>
+                <td class="align-middle" >Date</td>
+                <td class="align-middle" width="5%">Notes</td>
+                <td class="align-middle text-center" width="5%">Exam</td>
+                <td class="align-middle text-center" width="5%">Update</td>
+                <td class="align-middle text-center" width="5%">Delete</td>
             </tr>
             </thead>
             <tbody class="table-hover">
             <tr v-for="(res, index) in reservations">
                 <td>{{index+1}}</td>
-                <td>{{res.subject.name}}</td>
-                <td>{{res.exam.date}} at {{new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() <= 12? new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() : new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() - 12}}</td>
+                <td v-if="new Date(res.exam.date) > new Date()">
+                    <select type="" class="form-control" v-model="res.subject_id">
+                        <option v-for="sub in subjects" :value="sub.id">
+                            {{ sub.name }}
+                        </option>
+                    </select>
+                </td>
+                <td v-else>{{ res.subject.name }}</td>
+
+                <td v-if="new Date(res.exam.date) > new Date()">
+                    <select type="" class="form-control" v-model="res.exam_id">
+                        <option v-for="ex in exams" :value="ex.id">
+                            {{ ex.date }} - {{ new Date(Date.parse(ex.date+' '+ex.time)).getHours() <= 12? new Date(Date.parse(ex.date+' '+ex.time)).getHours() : new Date(Date.parse(ex.date+' '+ex.time)).getHours() - 12}}
+                        </option>
+                    </select>
+                </td>
+                <td v-else="">
+                    {{ res.exam.date }} - {{ new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() <= 12? new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() : new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() - 12}}
+                </td>
                 <td>{{res.notes}}</td>
                 <td class="text-center"><a :href="`/exam/${res.exam.id}`"><button class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
+                <td><button class="btn btn-primary" @click="update(index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                 <td class="text-center"><button class="btn btn-danger" @click="remove(index)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
             </tr>
             </tbody>
@@ -137,6 +156,20 @@
                 }else if (!this.subject && !this.subject.id){
                     window.alert('Please choose subject')
                 }
+            },
+            update(index){
+                let data = new FormData();
+                data.append('exam_id', this.reservations[index].exam_id);
+                data.append('subject_id', this.reservations[index].subject_id);
+
+                axios.post(`/api/reservation/${this.reservations[index].id}`, data).then((response) => {
+                    if (response.status === 200){
+                        window.open(`/reservation-pdf/${this.reservations[index].id}`);
+                    }
+                }).catch(function(error){
+                    window.alert(error.response.message);
+                    console.log(error.response);
+                });
             },
             remove(index){
                 if(confirm('Are you sure you want to delete it?!')) {
