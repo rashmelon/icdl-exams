@@ -6,6 +6,7 @@
                 {{category.name}}
             </div>
             <b-button v-b-toggle.addNewSkillcard variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Number</b-button>
+            <b-button v-b-toggle.addNewRange variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Range</b-button>
         </div>
 
         <b-collapse id="addNewSkillcard" class="">
@@ -20,6 +21,39 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <button class="btn btn-primary" @click="create">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </b-card>
+        </b-collapse>
+
+        <b-collapse id="addNewRange">
+            <b-card class="shadow mb-4">
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <input class="form-control" v-model="range['first']" placeholder="First">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <input class="form-control" v-model="range['second']" placeholder="Second">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input class="form-control" v-model="range['start']" placeholder="Start Number">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input class="form-control" v-model="range['range']" placeholder="Range">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <button class="btn btn-primary" @click="createRange">Create</button>
                         </div>
                     </div>
                 </div>
@@ -52,7 +86,7 @@
             </thead>
             <tbody>
             <tr v-for="(skill, index) in skills">
-                <td>{{index+1}}</td>
+                <td>{{(page-1)*100+index+1}}</td>
                 <td>{{skill.number}}</td>
                 <td>
                     <select class="form-control" v-model="skill.used">
@@ -79,6 +113,7 @@
             return {
                 skillCard: [],
                 skills: [],
+                range: [],
                 used: ['used', 'unused'],
                 page: 1,
                 lastPage: 1,
@@ -114,6 +149,28 @@
                         data['used'] = 0;
                         this.skills.push(data);
                         this.skillCard = [];
+                    }
+                }).catch(function(error){
+                    console.log(error);
+                });
+            },
+            createRange(){
+                let data = new FormData();
+                data.append('first', this.range['first']);
+                data.append('second', this.range['second']);
+                data.append('start', this.range['start']);
+                data.append('range', this.range['range']);
+                data.append('category_id', this.category.id);
+                axios.post(`/api/skills-card-range`, data).then((response) => {
+                    window.alert(response.data.message);
+                    if (response.status === 200){
+                        let data = response.data.data;
+
+                        for (let i = 0; i < data.length; i++) {
+                            data[i].used = 0;
+                            this.skills.push(data[i]);
+                        }
+                        this.range = [];
                     }
                 }).catch(function(error){
                     console.log(error);

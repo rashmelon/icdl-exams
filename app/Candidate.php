@@ -38,7 +38,7 @@ class Candidate extends Model
             ->orWhere('mobile2', 'like', "%$search%")
             ->orWhereHas('skillsCard', function ($query) use($search){
                 $query->where('number', 'like', "%$search%");
-            });
+            })->orderBy('english_name');
     }
 
     public function scopeCategory($query, $id)

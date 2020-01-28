@@ -36,6 +36,9 @@ class ExamController extends Controller
         if (\request()->coming){
             $builder->coming();
         }
+        if (\request()->coming_today){
+            $builder->comingToday();
+        }
         if (\request()->past){
             $builder->past();
         }

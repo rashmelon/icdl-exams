@@ -15,9 +15,14 @@ class Exam extends Model
         return parent::newQuery()->reservationsCount()->officeCount()->noOfficeCount();
     }
 
-    public function scopeComing($query)
+    public function scopeComingToday($query)
     {
         return $query->where('date', '>=', today());
+    }
+
+    public function scopeComing($query)
+    {
+        return $query->where('date', '>', today());
     }
 
     public function scopePast($query)

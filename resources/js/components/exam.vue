@@ -8,7 +8,7 @@
             </div>
 
             <div class="passed">
-                <b-button class="btn btn-success" @click="getData('coming')"><i class="fa fa-check mr-2" aria-hidden="true"></i><div class="d-none d-lg-inline">Coming</div></b-button>
+                <b-button class="btn btn-success" @click="getData('coming_today')"><i class="fa fa-check mr-2" aria-hidden="true"></i><div class="d-none d-lg-inline">Coming</div></b-button>
                 <b-button @click="getData('past')"><i class="fa fa-clock-o mr-2" aria-hidden="true"></i><div class="d-none d-lg-inline">Passed</div></b-button>
             </div>
 
@@ -90,7 +90,7 @@
         },
         mounted(){
             console.log(new Date());
-            this.getData('coming');
+            this.getData('coming_today');
         },
         methods:{
             getData(filter){

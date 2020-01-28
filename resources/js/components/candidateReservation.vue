@@ -46,7 +46,7 @@
                 <td class="align-middle" width="1%">#</td>
                 <td class="align-middle" width="25%">subject</td>
                 <td class="align-middle" >Date</td>
-                <td class="align-middle" width="5%">Notes</td>
+                <td class="align-middle" width="15%">Notes</td>
                 <td class="align-middle text-center" width="5%">Exam</td>
                 <td class="align-middle text-center" width="5%">Update</td>
                 <td class="align-middle text-center" width="5%">Delete</td>
@@ -67,12 +67,12 @@
                 <td v-if="new Date(res.exam.date) > new Date()">
                     <select type="" class="form-control" v-model="res.exam_id">
                         <option v-for="ex in exams" :value="ex.id">
-                            {{ ex.date }} - {{ new Date(Date.parse(ex.date+' '+ex.time)).getHours() <= 12? new Date(Date.parse(ex.date+' '+ex.time)).getHours() : new Date(Date.parse(ex.date+' '+ex.time)).getHours() - 12}}
+                            {{ new Date(Date.parse(res.exam.date)).getDate() }} / {{ new Date(Date.parse(res.exam.date)).getMonth()+1 }} at {{ new Date(Date.parse(ex.date+' '+ex.time)).getHours() <= 12? new Date(Date.parse(ex.date+' '+ex.time)).getHours() : new Date(Date.parse(ex.date+' '+ex.time)).getHours() - 12}}:00
                         </option>
                     </select>
                 </td>
-                <td v-else="">
-                    {{ res.exam.date }} - {{ new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() <= 12? new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() : new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() - 12}}
+                <td v-else>
+                    {{ new Date(Date.parse(res.exam.date)).getDate() }} / {{ new Date(Date.parse(res.exam.date)).getMonth()+1 }} at {{ new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() <= 12? new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() : new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() - 12}}:00
                 </td>
                 <td>{{res.notes}}</td>
                 <td class="text-center"><a :href="`/exam/${res.exam.id}`"><button class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>

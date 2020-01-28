@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="icon" href="{{ asset('/logo.png') }}" type="image/x-icon"/>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/app2.css') }}" type="text/css">
         <script src="{{ asset('js/app.js') }}" async defer></script>

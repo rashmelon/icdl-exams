@@ -3,8 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="6f935503-762b-4e76-ba20-f54d71911c0f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Candidate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Candidate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exam.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exam.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CandidateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CandidateController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ExamController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ExamController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SkillsCardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SkillsCardController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/candidateReservation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/candidateReservation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/exam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/exam.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/skillsCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/skillsCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Layouts/pdf.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Layouts/pdf.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -201,9 +212,6 @@
       <method v="2" />
     </configuration>
   </component>
-  <component name="ServiceViewManager">
-    <option name="showServicesTree" value="false" />
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -249,7 +257,11 @@
       <workItem from="1579675486751" duration="2239000" />
       <workItem from="1579762721630" duration="2217000" />
       <workItem from="1579767110375" duration="6462000" />
-      <workItem from="1579801062000" duration="2732000" />
+      <workItem from="1579801062000" duration="3029000" />
+      <workItem from="1579960881859" duration="158000" />
+      <workItem from="1580021246262" duration="3363000" />
+      <workItem from="1580112081311" duration="4338000" />
+      <workItem from="1580197852391" duration="1107000" />
     </task>
     <servers />
   </component>

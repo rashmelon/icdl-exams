@@ -3,6 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('/logo.png') }}" type="image/x-icon"/>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/app2.css') }}" type="text/css">
 
@@ -75,9 +76,6 @@
         .options-btn:hover>i{
             transform: rotate(135deg);
         }
-        .options{
-            transition: all 0.3s ease-in-out;
-        }
         .options-btn .options{
             position: absolute;
             bottom: 0;
@@ -85,11 +83,16 @@
             padding-bottom: 50px;
         }
         .options .btn{
-            display: none;
+            left: 100px;
+            transition: 0.1s ease-in-out;
         }
         .options-btn:hover .btn{
-            display: block;
+            left: 0;
         }
+        .options-btn:hover .btn:nth-of-type(1){transition-delay: 0.500s;}
+        .options-btn:hover .btn:nth-of-type(2){transition-delay: 0.3752s;}
+        .options-btn:hover .btn:nth-of-type(3){transition-delay: 0.250s;}
+        .options-btn:hover .btn:nth-of-type(4){transition-delay: 0.125s;}
 
         .options .btn{
             margin-top: 15px;
@@ -108,9 +111,9 @@
             content: '';
             position: absolute;
             top: 30%;
-            right: -12px;
+            right: -15px;
             border: 7px solid transparent;
-            border-bottom-color: rgba(255,255,255,0.8);
+            border-bottom-color: #333;
             transform: rotate(90deg);
         }
 
@@ -124,6 +127,7 @@
             color: #000;
             display: none;
             width: max-content;
+            border: 1px solid #333;
         }
         .options .btn:hover .popper{
             display: block;

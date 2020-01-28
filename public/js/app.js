@@ -2749,7 +2749,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log(new Date());
-    this.getData('coming');
+    this.getData('coming_today');
   },
   methods: {
     getData: function getData(filter) {
@@ -3240,12 +3240,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "skillsCard",
   data: function data() {
     return {
       skillCard: [],
       skills: [],
+      range: [],
       used: ['used', 'unused'],
       page: 1,
       lastPage: 1,
@@ -3293,6 +3328,33 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    createRange: function createRange() {
+      var _this3 = this;
+
+      var data = new FormData();
+      data.append('first', this.range['first']);
+      data.append('second', this.range['second']);
+      data.append('start', this.range['start']);
+      data.append('range', this.range['range']);
+      data.append('category_id', this.category.id);
+      axios.post("/api/skills-card-range", data).then(function (response) {
+        window.alert(response.data.message);
+
+        if (response.status === 200) {
+          var _data2 = response.data.data;
+
+          for (var i = 0; i < _data2.length; i++) {
+            _data2[i].used = 0;
+
+            _this3.skills.push(_data2[i]);
+          }
+
+          _this3.range = [];
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     update: function update(index) {
       var data = new FormData();
       data.append('used', this.skills[index].used);
@@ -3305,14 +3367,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     remove: function remove(index) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (confirm('Are you sure you want to delete it?!')) {
         axios["delete"]("/api/skills-card/".concat(this.skills[index].id)).then(function (response) {
           window.alert(response.data.message);
 
           if (response.status === 200) {
-            _this3.skills.splice(index, 1);
+            _this4.skills.splice(index, 1);
           }
         })["catch"](function (error) {
           console.log(error);
@@ -56085,7 +56147,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "td",
-                { staticClass: "align-middle", attrs: { width: "5%" } },
+                { staticClass: "align-middle", attrs: { width: "15%" } },
                 [_vm._v("Notes")]
               ),
               _vm._v(" "),
@@ -56213,8 +56275,16 @@ var render = function() {
                           return _c("option", { domProps: { value: ex.id } }, [
                             _vm._v(
                               "\n                        " +
-                                _vm._s(ex.date) +
-                                " - " +
+                                _vm._s(
+                                  new Date(Date.parse(res.exam.date)).getDate()
+                                ) +
+                                " / " +
+                                _vm._s(
+                                  new Date(
+                                    Date.parse(res.exam.date)
+                                  ).getMonth() + 1
+                                ) +
+                                " at " +
                                 _vm._s(
                                   new Date(
                                     Date.parse(ex.date + " " + ex.time)
@@ -56226,7 +56296,7 @@ var render = function() {
                                         Date.parse(ex.date + " " + ex.time)
                                       ).getHours() - 12
                                 ) +
-                                "\n                    "
+                                ":00\n                    "
                             )
                           ])
                         }),
@@ -56236,8 +56306,14 @@ var render = function() {
                   : _c("td", [
                       _vm._v(
                         "\n                " +
-                          _vm._s(res.exam.date) +
-                          " - " +
+                          _vm._s(
+                            new Date(Date.parse(res.exam.date)).getDate()
+                          ) +
+                          " / " +
+                          _vm._s(
+                            new Date(Date.parse(res.exam.date)).getMonth() + 1
+                          ) +
+                          " at " +
                           _vm._s(
                             new Date(
                               Date.parse(res.exam.date + " " + res.exam.time)
@@ -56253,7 +56329,7 @@ var render = function() {
                                   )
                                 ).getHours() - 12
                           ) +
-                          "\n            "
+                          ":00\n            "
                       )
                     ]),
                 _vm._v(" "),
@@ -56690,7 +56766,7 @@ var render = function() {
                   staticClass: "btn btn-success",
                   on: {
                     click: function($event) {
-                      return _vm.getData("coming")
+                      return _vm.getData("coming_today")
                     }
                   }
                 },
@@ -57714,6 +57790,27 @@ var render = function() {
               }),
               _vm._v("New Number")
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-button",
+            {
+              directives: [
+                {
+                  name: "b-toggle",
+                  rawName: "v-b-toggle.addNewRange",
+                  modifiers: { addNewRange: true }
+                }
+              ],
+              attrs: { variant: "primary" }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-plus mr-2",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v("New Range")
+            ]
           )
         ],
         1
@@ -57758,6 +57855,134 @@ var render = function() {
                     {
                       staticClass: "btn btn-primary",
                       on: { click: _vm.create }
+                    },
+                    [_vm._v("Create")]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-collapse",
+        { attrs: { id: "addNewRange" } },
+        [
+          _c("b-card", { staticClass: "shadow mb-4" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.range["first"],
+                        expression: "range['first']"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { placeholder: "First" },
+                    domProps: { value: _vm.range["first"] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.range, "first", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.range["second"],
+                        expression: "range['second']"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { placeholder: "Second" },
+                    domProps: { value: _vm.range["second"] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.range, "second", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.range["start"],
+                        expression: "range['start']"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { placeholder: "Start Number" },
+                    domProps: { value: _vm.range["start"] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.range, "start", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.range["range"],
+                        expression: "range['range']"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { placeholder: "Range" },
+                    domProps: { value: _vm.range["range"] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.range, "range", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      on: { click: _vm.createRange }
                     },
                     [_vm._v("Create")]
                   )
@@ -57819,7 +58044,7 @@ var render = function() {
           "tbody",
           _vm._l(_vm.skills, function(skill, index) {
             return _c("tr", [
-              _c("td", [_vm._v(_vm._s(index + 1))]),
+              _c("td", [_vm._v(_vm._s((_vm.page - 1) * 100 + index + 1))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(skill.number))]),
               _vm._v(" "),

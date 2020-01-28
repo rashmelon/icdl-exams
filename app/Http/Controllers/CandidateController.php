@@ -45,7 +45,9 @@ class CandidateController extends Controller
 
         $data = request()->all();
 
-        if (Candidate::where('skills_card_id', $data['skills_card_id'])->first()){
+        $temp = Candidate::where('skills_card_id', $data['skills_card_id'])->first();
+
+        if ($temp && $temp != $candidate){
             return $this->respond('Skills card already assigned to a candidate', [], 422);
         }
 

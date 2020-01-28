@@ -60,4 +60,22 @@ class SkillsCardController extends Controller
         }
         return $builder;
     }
+
+    public function range()
+    {
+        $first = \request()->first;
+        $second = \request()->second;
+        $start = \request()->start;
+        $range = \request()->range;
+        $skills = array();
+        for ($i = 0; $i < $range; $i++){
+            $skills []= \App\SkillsCard::create([
+                'number' => "$first $second $start",
+                'category_id' => \request()->category_id,
+                'used' => 0
+            ]);
+            $start++;
+        }
+        return $this->respond('Created Successfully', $skills);
+    }
 }
