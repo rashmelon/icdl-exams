@@ -55,7 +55,7 @@
             <tr>
                 <td class="align-middle" width="2%">Revised</td>
                 <td class="align-middle" width="2%">index</td>
-                <td class="align-middle" width="5%">subject</td>
+                <td class="align-middle" width="10%">subject</td>
                 <td class="align-middle" width="10%">Skill Card</td>
                 <td class="align-middle">English Name</td>
                 <td class="align-middle" width="8%">First Mobile</td>

@@ -26,7 +26,7 @@ class CandidateController extends Controller
     {
         $data = $request->validated();
 
-        if (Candidate::where('skills_card_id', $data['skills_card_id'])->first()){
+        if ($request->skills_card_id && Candidate::where('skills_card_id', $data['skills_card_id'])->first()){
             return $this->respond('Skills card already assigned to a candidate', [], 422);
         }
 
@@ -64,7 +64,9 @@ class CandidateController extends Controller
     {
         $candidate = Candidate::find($id);
 
-        SkillsCard::where('id', $candidate->skills_card_id)->first()->update(['used' => 0]);
+        if ($candidate->skills_card_id){
+            SkillsCard::where('id', $candidate->skills_card_id)->first()->update(['used' => 0]);
+        }
 
         $candidate->delete();
 

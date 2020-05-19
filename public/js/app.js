@@ -1998,6 +1998,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "candidate",
@@ -2459,8 +2465,8 @@ __webpack_require__.r(__webpack_exports__);
           window.open("/reservation-pdf/".concat(_this5.reservations[index].id));
         }
       })["catch"](function (error) {
-        window.alert(error.response.message);
-        console.log(error.response);
+        window.alert(error.response.data.message);
+        console.log(error.data.response);
       });
     },
     remove: function remove(index) {
@@ -3060,14 +3066,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "reserve",
   data: function data() {
@@ -3274,6 +3272,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "skillsCard",
   data: function data() {
@@ -3314,9 +3318,8 @@ __webpack_require__.r(__webpack_exports__);
       data.append('number', this.skillCard['number']);
       data.append('category_id', this.category.id);
       axios.post("/api/skills-card", data).then(function (response) {
-        window.alert(response.data.message);
-
         if (response.status === 200) {
+          window.alert(response.data.message);
           var _data = response.data.data;
           _data['used'] = 0;
 
@@ -3325,6 +3328,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.skillCard = [];
         }
       })["catch"](function (error) {
+        window.alert(error.response.data.message);
         console.log(error);
       });
     },
@@ -3885,6 +3889,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "viewCandidate",
   data: function data() {
@@ -3904,6 +3918,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getCategories();
+
+    if (this.candidate.skills_card) {
+      this.candidate.not_paid = this.candidate.reservations_count + this.candidate.tests - this.candidate.skills_card.category.free_tests - this.candidate.payments_count;
+    } else {
+      this.candidate.not_paid = 0;
+    }
+
+    this.candidate.sum = this.candidate.tests + this.candidate.reservations_count;
   },
   methods: {
     getCategories: function getCategories() {
@@ -55239,44 +55261,73 @@ var render = function() {
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
-      _c("div", { staticStyle: { "text-align": "center" } }, [
-        _c("button", { on: { click: _vm.minusOne } }, [
-          _c("i", {
-            staticClass: "fa fa-3x fa-arrow-circle-left",
-            attrs: { "aria-hidden": "true" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.page,
-              expression: "page"
-            }
-          ],
-          staticStyle: { width: "40px" },
-          attrs: { type: "number" },
-          domProps: { value: _vm.page },
-          on: {
-            change: _vm.getData,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.page = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.plusOne } }, [
-          _c("i", {
-            staticClass: "fa fa-3x fa-arrow-circle-right",
-            attrs: { "aria-hidden": "true" }
-          })
-        ])
-      ]),
+      _c(
+        "div",
+        { staticClass: " d-block mx-auto", staticStyle: { width: "200px" } },
+        [
+          _c(
+            "div",
+            { staticClass: "input-group my-3 paging form-group text-center" },
+            [
+              _c("div", { staticClass: "input-group-prepend" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-dark rounded",
+                    on: { click: _vm.minusOne }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-circle-left",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.page,
+                    expression: "page"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { width: "40px" },
+                attrs: { type: "number" },
+                domProps: { value: _vm.page },
+                on: {
+                  change: _vm.getData,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.page = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-dark rounded",
+                    on: { click: _vm.plusOne }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-circle-right",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
@@ -56276,13 +56327,13 @@ var render = function() {
                             _vm._v(
                               "\n                        " +
                                 _vm._s(
-                                  new Date(Date.parse(res.exam.date)).getDate()
+                                  new Date(
+                                    Date.parse(ex.date + " 00:00")
+                                  ).getDate()
                                 ) +
                                 " / " +
                                 _vm._s(
-                                  new Date(
-                                    Date.parse(res.exam.date)
-                                  ).getMonth() + 1
+                                  new Date(Date.parse(ex.date)).getMonth() + 1
                                 ) +
                                 " at " +
                                 _vm._s(
@@ -56307,7 +56358,9 @@ var render = function() {
                       _vm._v(
                         "\n                " +
                           _vm._s(
-                            new Date(Date.parse(res.exam.date)).getDate()
+                            new Date(
+                              Date.parse(res.exam.date + " 00:00")
+                            ).getDate()
                           ) +
                           " / " +
                           _vm._s(
@@ -57442,7 +57495,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {},
     [
       _c("b-card", { staticClass: "shadow my-4" }, [
         _c("div", { staticClass: "row" }, [
@@ -57996,44 +58048,73 @@ var render = function() {
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
-      _c("div", { staticStyle: { "text-align": "center" } }, [
-        _c("button", { on: { click: _vm.minusOne } }, [
-          _c("i", {
-            staticClass: "fa fa-3x fa-arrow-circle-left",
-            attrs: { "aria-hidden": "true" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.page,
-              expression: "page"
-            }
-          ],
-          staticStyle: { width: "40px" },
-          attrs: { type: "number" },
-          domProps: { value: _vm.page },
-          on: {
-            change: _vm.getData,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.page = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.plusOne } }, [
-          _c("i", {
-            staticClass: "fa fa-3x fa-arrow-circle-right",
-            attrs: { "aria-hidden": "true" }
-          })
-        ])
-      ]),
+      _c(
+        "div",
+        { staticClass: " d-block mx-auto", staticStyle: { width: "200px" } },
+        [
+          _c(
+            "div",
+            { staticClass: "input-group my-3 paging form-group text-center" },
+            [
+              _c("div", { staticClass: "input-group-prepend" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-dark rounded",
+                    on: { click: _vm.minusOne }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-circle-left",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.page,
+                    expression: "page"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { width: "40px" },
+                attrs: { type: "number" },
+                domProps: { value: _vm.page },
+                on: {
+                  change: _vm.getData,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.page = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-dark rounded",
+                    on: { click: _vm.plusOne }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-circle-right",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
@@ -59510,6 +59591,66 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Number Of Tests")]),
+              _vm._v(" "),
+              _vm.candidate.tests || _vm.candidate.reservations_count
+                ? _c("div", { staticClass: "d-inline" }, [
+                    _vm.candidate.not_paid > 0
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "bg-danger",
+                            staticStyle: { color: "white", padding: "10px" }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm.candidate.tests +
+                                  _vm.candidate.reservations_count
+                              ) +
+                                " (" +
+                                _vm._s(_vm.candidate.not_paid) +
+                                ")"
+                            )
+                          ]
+                        )
+                      : _vm.candidate.not_paid < 0
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "bg-success",
+                            staticStyle: { color: "white", padding: "10px" }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm.candidate.tests +
+                                  _vm.candidate.reservations_count
+                              ) +
+                                " (" +
+                                _vm._s(Math.abs(_vm.candidate.not_paid)) +
+                                ")"
+                            )
+                          ]
+                        )
+                      : _c("span", [
+                          _vm._v(
+                            _vm._s(
+                              _vm.candidate.tests +
+                                _vm.candidate.reservations_count
+                            ) +
+                              " (" +
+                              _vm._s(_vm.candidate.not_paid) +
+                              ")"
+                          )
+                        ])
+                  ])
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "col" }, [
             _c("div", { staticClass: "form-group" }, [
               _c(
@@ -60014,7 +60155,7 @@ var staticRenderFns = [
           _vm._v("index")
         ]),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { width: "5%" } }, [
+        _c("td", { staticClass: "align-middle", attrs: { width: "10%" } }, [
           _vm._v("subject")
         ]),
         _vm._v(" "),

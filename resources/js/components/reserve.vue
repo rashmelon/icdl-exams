@@ -1,13 +1,5 @@
 <template>
-    <div class="">
-
-<!--
-
-        <div class="jumbotron jumbotron-fluid mt-3 p-3 d-flex justify-content-between">
-            <b-button class="button" v-b-toggle.addNewExam variant="primary"><i class="fa fa-plus mr-2" aria-hidden="true"></i>New Reservation</b-button>
-        </div>
--->
-
+    <div>
         <b-card class="shadow my-4">
             <div class="row">
                 <div class="col-md-6">

@@ -61,15 +61,21 @@
         </b-collapse>
 
         <hr>
+        <div class=" d-block mx-auto" style="width: 200px">
+            <div class="input-group my-3 paging form-group text-center">
+                <div class="input-group-prepend">
+                    <button @click="minusOne" class="btn btn-dark rounded">
+                        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <input class="form-control" type="number" v-model="page" style="width:40px" @change="getData">
+                <div class="input-group-append">
+                    <button @click="plusOne" class="btn btn-dark rounded">
+                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                    </button>
+                </div>
 
-        <div style="text-align: center">
-            <button @click="minusOne">
-                <i class="fa fa-3x fa-arrow-circle-left" aria-hidden="true"></i>
-            </button>
-            <input type="number" v-model="page" style="width:40px" @change="getData">
-            <button @click="plusOne">
-                <i class="fa fa-3x fa-arrow-circle-right" aria-hidden="true"></i>
-            </button>
+            </div>
         </div>
 
         <hr>
@@ -143,14 +149,15 @@
                 data.append('number', this.skillCard['number']);
                 data.append('category_id', this.category.id);
                 axios.post(`/api/skills-card`, data).then((response) => {
-                    window.alert(response.data.message);
                     if (response.status === 200){
+                        window.alert(response.data.message);
                         let data = response.data.data;
                         data['used'] = 0;
                         this.skills.push(data);
                         this.skillCard = [];
                     }
                 }).catch(function(error){
+                    window.alert(error.response.data.message);
                     console.log(error);
                 });
             },

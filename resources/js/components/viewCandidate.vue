@@ -105,6 +105,16 @@
                         <input class="form-control" type="checkbox" v-model="candidate['finished']" placeholder="notes">
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Number Of Tests</label>
+                        <div class="d-inline" v-if="candidate.tests || candidate.reservations_count" >
+                            <span v-if="candidate.not_paid > 0" class="bg-danger" style="color:white;padding:10px;">{{candidate.tests + candidate.reservations_count}} ({{candidate.not_paid}})</span>
+                            <span v-else-if="candidate.not_paid < 0" class="bg-success" style="color:white;padding:10px;">{{candidate.tests + candidate.reservations_count}} ({{Math.abs(candidate.not_paid)}})</span>
+                            <span v-else>{{candidate.tests + candidate.reservations_count}} ({{candidate.not_paid}})</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col">
                     <div class="form-group">
                         <button class="btn btn-primary" @click="update">Update</button>
@@ -147,6 +157,16 @@
         },
         mounted(){
             this.getCategories();
+            if (this.candidate.skills_card){
+                this.candidate.not_paid = this.candidate.reservations_count
+                    + this.candidate.tests
+                    - this.candidate.skills_card.category.free_tests
+                    - this.candidate.payments_count;
+            }
+            else{
+                this.candidate.not_paid = 0;
+            }
+            this.candidate.sum = this.candidate.tests + this.candidate.reservations_count;
         },
         methods:{
             getCategories(){

@@ -141,7 +141,7 @@ ol{
 .table thead{
     background: #28a745;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
 }
 .table tbody{
@@ -187,3 +187,18 @@ table thead{
 nav.navbar{
     box-shadow: 0 7px 10px rgba(0,0,0,0.2);
 }
+table td{
+    vertical-align: middle!important;
+    padding: 5px!important;
+}
+table.exam .review {
+    height: 25px;
+}
+table thead td{
+    font-size: 14px!important;
+    padding: 12px 5px!important;
+    font-weight: 600;
+}
+
+
+.paging button{}
