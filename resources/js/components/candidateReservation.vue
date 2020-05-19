@@ -67,12 +67,12 @@
                 <td v-if="new Date(res.exam.date) > new Date()">
                     <select type="" class="form-control" v-model="res.exam_id">
                         <option v-for="ex in exams" :value="ex.id">
-                            {{ new Date(Date.parse(res.exam.date)).getDate() }} / {{ new Date(Date.parse(res.exam.date)).getMonth()+1 }} at {{ new Date(Date.parse(ex.date+' '+ex.time)).getHours() <= 12? new Date(Date.parse(ex.date+' '+ex.time)).getHours() : new Date(Date.parse(ex.date+' '+ex.time)).getHours() - 12}}:00
+                            {{ new Date(Date.parse(ex.date+ ' 00:00')).getDate() }} / {{ new Date(Date.parse(ex.date)).getMonth()+1 }} at {{ new Date(Date.parse(ex.date+' '+ex.time)).getHours() <= 12? new Date(Date.parse(ex.date+' '+ex.time)).getHours() : new Date(Date.parse(ex.date+' '+ex.time)).getHours() - 12}}:00
                         </option>
                     </select>
                 </td>
                 <td v-else>
-                    {{ new Date(Date.parse(res.exam.date)).getDate() }} / {{ new Date(Date.parse(res.exam.date)).getMonth()+1 }} at {{ new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() <= 12? new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() : new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() - 12}}:00
+                    {{ new Date(Date.parse(res.exam.date+ ' 00:00')).getDate() }} / {{ new Date(Date.parse(res.exam.date)).getMonth()+1 }} at {{ new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() <= 12? new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() : new Date(Date.parse(res.exam.date+' '+res.exam.time)).getHours() - 12}}:00
                 </td>
                 <td>{{res.notes}}</td>
                 <td class="text-center"><a :href="`/exam/${res.exam.id}`"><button class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
@@ -167,8 +167,8 @@
                         window.open(`/reservation-pdf/${this.reservations[index].id}`);
                     }
                 }).catch(function(error){
-                    window.alert(error.response.message);
-                    console.log(error.response);
+                    window.alert(error.response.data.message);
+                    console.log(error.data.response);
                 });
             },
             remove(index){

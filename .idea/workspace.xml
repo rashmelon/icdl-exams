@@ -3,19 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="6f935503-762b-4e76-ba20-f54d71911c0f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Candidate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Candidate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exam.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exam.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CandidateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CandidateController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ExamController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ExamController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SkillsCardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SkillsCardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app2.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app2.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/candidate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/candidate.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/candidateReservation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/candidateReservation.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/exam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/exam.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/reserve.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/reserve.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/skillsCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/skillsCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/viewCandidate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/viewCandidate.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/viewExam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/viewExam.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/Layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Layouts/pdf.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Layouts/pdf.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/header.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -261,7 +261,16 @@
       <workItem from="1579960881859" duration="158000" />
       <workItem from="1580021246262" duration="3363000" />
       <workItem from="1580112081311" duration="4338000" />
-      <workItem from="1580197852391" duration="1107000" />
+      <workItem from="1580197852391" duration="3556000" />
+      <workItem from="1580283725441" duration="5151000" />
+      <workItem from="1580542506722" duration="1284000" />
+      <workItem from="1580581018434" duration="1509000" />
+      <workItem from="1580883320759" duration="56000" />
+      <workItem from="1580885544760" duration="257000" />
+      <workItem from="1581352876012" duration="877000" />
+      <workItem from="1581411084565" duration="2460000" />
+      <workItem from="1581509212086" duration="1501000" />
+      <workItem from="1581849520074" duration="2515000" />
     </task>
     <servers />
   </component>

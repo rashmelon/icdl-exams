@@ -23,6 +23,10 @@ class SkillsCardController extends Controller
 
     public function store()
     {
+        if(SkillsCard::where('number', request()->number)->first()){
+            return $this->respond('Skills card number already exists', [], 422);
+        }
+
         return $this->respond('Created Successfully', SkillsCard::create(request()->all()));
     }
 

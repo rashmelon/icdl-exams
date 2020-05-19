@@ -143,38 +143,38 @@
 </a>
 
 
-<div class="floating-home-btn options-btn btn btn-outline-success">
-    <span class="btn success-btn p-0 text-center d-block">
-        <i class="fa fa-cog text-success d-flex justify-content-center align-items-center" aria-hidden="true"></i>
-    </span>
+{{--<div class="floating-home-btn options-btn btn btn-outline-success">--}}
+{{--    <span class="btn success-btn p-0 text-center d-block">--}}
+{{--        <i class="fa fa-cog text-success d-flex justify-content-center align-items-center" aria-hidden="true"></i>--}}
+{{--    </span>--}}
 
-    <div class="options">
-        <div class="btn btn-info rounded-circle">
-            <a href="/category">
-                <i class="fa fa-bookmark" aria-hidden="true"></i>
-                <span class="popper">Category</span>
-            </a>
-        </div>
-        <div class="btn btn-info rounded-circle">
-            <a href="/exam">
-                <i class="fa fa-address-book" aria-hidden="true"></i>
-                <span class="popper">Exam</span>
-            </a>
-        </div>
-        <div class="btn btn-info rounded-circle">
-            <a href="/instruction">
-                <i class="fa fa-database" aria-hidden="true"></i>
-                <span class="popper">Instruction</span>
-            </a>
-        </div>
-        <div class="btn btn-info rounded-circle">
-            <a href="/un-assigned-candidate">
-                <i class="fa fa-child" aria-hidden="true"></i>
-                <span class="popper">Unassigned Candidate</span>
-            </a>
-        </div>
-    </div>
-</div>
+{{--    <div class="options">--}}
+{{--        <div class="btn btn-info rounded-circle">--}}
+{{--            <a href="/category">--}}
+{{--                <i class="fa fa-bookmark" aria-hidden="true"></i>--}}
+{{--                <span class="popper">Category</span>--}}
+{{--            </a>--}}
+{{--        </div>--}}
+{{--        <div class="btn btn-info rounded-circle">--}}
+{{--            <a href="/exam">--}}
+{{--                <i class="fa fa-address-book" aria-hidden="true"></i>--}}
+{{--                <span class="popper">Exam</span>--}}
+{{--            </a>--}}
+{{--        </div>--}}
+{{--        <div class="btn btn-info rounded-circle">--}}
+{{--            <a href="/instruction">--}}
+{{--                <i class="fa fa-database" aria-hidden="true"></i>--}}
+{{--                <span class="popper">Instruction</span>--}}
+{{--            </a>--}}
+{{--        </div>--}}
+{{--        <div class="btn btn-info rounded-circle">--}}
+{{--            <a href="/un-assigned-candidate">--}}
+{{--                <i class="fa fa-child" aria-hidden="true"></i>--}}
+{{--                <span class="popper">Unassigned Candidate</span>--}}
+{{--            </a>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 @include('partials.header')
 <div id="app" class="position-relative">
     @yield('content')
